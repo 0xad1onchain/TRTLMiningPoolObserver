@@ -46,7 +46,8 @@ public class WalletActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        poolType = parent.getItemAtPosition(position).toString();
+        String[] urls = getResources().getStringArray(R.array.urls);
+        poolType = urls[position];
 
     }
 
