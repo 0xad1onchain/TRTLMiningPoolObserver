@@ -71,7 +71,7 @@ public class WalletActivity extends AppCompatActivity implements AdapterView.OnI
                 walletEditor.putString("wallet",wallet);
                 walletEditor.apply();
 
-                //Start intent for activityg
+
             }
         }
     }
