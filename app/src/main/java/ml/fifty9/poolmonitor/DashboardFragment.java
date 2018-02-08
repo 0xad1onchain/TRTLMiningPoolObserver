@@ -29,7 +29,7 @@ public class DashboardFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_dashboard, container, false);
         Charts chart = ((ParentActivity)this.getActivity()).getChart();
-        TextView head = (TextView) view.findViewById(R.id.main_text);
+        TextView head = (TextView) view.findViewById(R.id.hash_rate);
         head.setText(chart.getPayments().toString());
         return view;
     }
