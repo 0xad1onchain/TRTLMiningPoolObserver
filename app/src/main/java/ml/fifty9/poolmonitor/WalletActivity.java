@@ -27,8 +27,8 @@ public class WalletActivity extends AppCompatActivity implements AdapterView.OnI
         spinner = findViewById(R.id.spinner);
         walletAddress = findViewById(R.id.wallet_text);
         button = findViewById(R.id.submit);
-        sharedPreferences = this.getSharedPreferences("URL_PREFS", Context.MODE_PRIVATE);
-        walletPref = this.getSharedPreferences("WALLET_PREFS",Context.MODE_PRIVATE);
+        sharedPreferences = this.getSharedPreferences("URL_PREFS", 0);
+        walletPref = this.getSharedPreferences("WALLET_PREFS",0);
 
         wallet = walletAddress.getEditableText().toString();
 
