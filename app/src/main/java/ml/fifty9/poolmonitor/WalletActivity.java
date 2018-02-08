@@ -30,8 +30,6 @@ public class WalletActivity extends AppCompatActivity implements AdapterView.OnI
         sharedPreferences = this.getSharedPreferences("URL_PREFS", 0);
         walletPref = this.getSharedPreferences("WALLET_PREFS",0);
 
-        wallet = walletAddress.getEditableText().toString();
-
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.
                 createFromResource(this,R.array.categories,android.R.layout.simple_spinner_item);
 
@@ -58,6 +56,9 @@ public class WalletActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onClick(View v) {
+
+        wallet = walletAddress.getEditableText().toString();
+
         if(v.getId() == R.id.submit){
             if(wallet.isEmpty() || poolType.isEmpty()){
                 Toast.makeText(this,"Enter all details", Toast.LENGTH_SHORT).show();
