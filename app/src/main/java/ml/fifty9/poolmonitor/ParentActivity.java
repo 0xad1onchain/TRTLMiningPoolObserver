@@ -1,5 +1,6 @@
 package ml.fifty9.poolmonitor;
 
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
 
 import ml.fifty9.poolmonitor.model.Charts;
 import ml.fifty9.poolmonitor.model.Pool;
@@ -23,6 +26,10 @@ public class ParentActivity extends AppCompatActivity {
     private SectionPagerAdapter mSectionPagerAdapter;
     private ViewPager mViewPager;
     private Toolbar toolbar;
+    private EditText walletAddress;
+    private Button button;
+    private SharedPreferences sharedPreferences, walletPref;
+    private String wallet,pool,walletText;
     private RetrofitAPI retrofitAPI;
     private Charts chartObj;
     private Stats statObj;
@@ -31,7 +38,15 @@ public class ParentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent);
-        retrofitAPI = RetrofitService.getAPI();
+
+        walletAddress = findViewById(R.id.wallet_text);
+        button = findViewById(R.id.submit);
+        sharedPreferences = this.getSharedPreferences("URL_PREFS", 0);
+        walletPref = this.getSharedPreferences("WALLET_PREFS",0);
+
+        walletText = walletPref.getString("wallet","");
+        pool = sharedPreferences.getString("url","");
+        retrofitAPI = RetrofitService.getAPI(pool);
         callAPI();
     }
 
@@ -85,7 +100,7 @@ public class ParentActivity extends AppCompatActivity {
     }
 
     private void callAPI() {
-        retrofitAPI.queryDashboardStats("TRTLux32vos9TtGNRQTux4WLFQTBX2ii3RMzGsrbN2dKatwucquqQRmUUzXkuiNyEA5NCqPUiP3SeSeJVT9bpW3SGyWKmRcoT3Z")
+        retrofitAPI.queryDashboardStats(walletText)
                 .enqueue(new Callback<Pool>() {
                     @Override
                     public void onResponse(Call<Pool> call, Response<Pool> response) {

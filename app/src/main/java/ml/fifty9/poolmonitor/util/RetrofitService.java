@@ -14,8 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
 
-    public static RetrofitAPI getAPI(){
-        final Retrofit retrofit = createRetrofit();
+    public static RetrofitAPI getAPI(String url){
+        final Retrofit retrofit = createRetrofit(url);
         return retrofit.create(RetrofitAPI.class);
     }
 
@@ -29,9 +29,9 @@ public class RetrofitService {
         return httpClient.build();
     }
 
-    private static Retrofit createRetrofit(){
+    private static Retrofit createRetrofit(String url){
         return new Retrofit.Builder()
-                .baseUrl("http://z-pool.com:8117/")
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(createOkHttpClient())
