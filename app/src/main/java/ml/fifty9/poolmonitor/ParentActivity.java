@@ -89,11 +89,6 @@ public class ParentActivity extends AppCompatActivity {
                 .enqueue(new Callback<Pool>() {
                     @Override
                     public void onResponse(Call<Pool> call, Response<Pool> response) {
-                        /**
-                         * Get response from the API
-                         * use response.body.getCharts() for various payments and hashrates
-                         * use response.body.getStats() to get details like hashes,lastShare, balance, paid
-                         */
                         Log.d("Response from API",
                                 response.body().getCharts().getPayments().get(0).get(0).toString());
 

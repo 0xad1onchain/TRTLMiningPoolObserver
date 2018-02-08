@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="categories">
+        <item>slowandsteady.fun</item>
+        <item>eu.turtlepool.space</item>
+        <item>hk.turtlepool.space</item>
+        <item>us.turtlepool.space</item>
+        <item>trtl.mine2gether.com</item>
+        <item>ny.minetrtl.us</item>
+        <item>trtl.radicaldelta.org</item>
+        <item>auspool.turtleco.in</item>
+        <item>xk.is</item>
+    </string-array>
+
+    <string-array name="urls">
         <item>http://slowandsteady.fun:8119/</item>
         <item>http://eu.turtlepool.space:8117/</item>
         <item>http://hk.turtlepool.space:8117/</item>
