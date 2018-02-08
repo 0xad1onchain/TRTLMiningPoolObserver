@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>http://slowandsteady.fun:8119/</item>
+        <item>http://eu.turtlepool.space:8117/</item>
+        <item>http://hk.turtlepool.space:8117/</item>
+        <item>http://us.turtlepool.space:8117/</item>
+        <item>https://trtl.mine2gether.com/api/</item>
+        <item>http://ny.minetrtl.us:8117/</item>
+        <item>http://trtl.radicaldelta.org:8117/</item>
+        <item>https://auspool.turtleco.in/api/</item>
+        <item>https://xk.is/api/</item>
+    </string-array>
+</resources>

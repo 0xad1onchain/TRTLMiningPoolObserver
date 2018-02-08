@@ -109,10 +109,8 @@ public class ParentActivity extends AppCompatActivity {
     }
 
     private void setAPIObjects(Response<Pool> response) {
-
         chartObj = response.body().getCharts();
         statObj = response.body().getStats();
-
     }
 
     private void inflateTabs() {
