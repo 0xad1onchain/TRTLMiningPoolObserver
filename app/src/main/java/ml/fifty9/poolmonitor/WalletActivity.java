@@ -1,6 +1,7 @@
 package ml.fifty9.poolmonitor;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -71,7 +72,8 @@ public class WalletActivity extends AppCompatActivity implements AdapterView.OnI
                 walletEditor.putString("wallet",wallet);
                 walletEditor.apply();
 
-
+                Intent myIntent = new Intent(WalletActivity.this, ParentActivity.class);
+                WalletActivity.this.startActivity(myIntent);
             }
         }
     }
