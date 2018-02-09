@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -177,6 +176,8 @@ public class DashboardFragment extends Fragment {
             dataSet.setFillAlpha(255);
             dataSet.setValueTextColor(Color.BLACK);
             dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            dataSet.setDrawValues(false);
+            dataSet.setDrawCircles(false);
             dataSet.setCircleRadius(0);
 
             LineData lineData = new LineData(dataSet);
@@ -187,9 +188,9 @@ public class DashboardFragment extends Fragment {
             legend.setEnabled(false);
 
             YAxis leftAxis = hashChart.getAxisLeft();
-            leftAxis.setDrawLabels(false); // no axis labels
-            leftAxis.setDrawAxisLine(false); // no axis line
-            leftAxis.setDrawGridLines(false); // no grid lines
+//            leftAxis.setDrawLabels(false); // no axis labels
+//            leftAxis.setDrawAxisLine(false); // no axis line
+//            leftAxis.setDrawGridLines(false); // no grid lines
             leftAxis.disableAxisLineDashedLine();
             leftAxis.removeAllLimitLines();
             leftAxis.disableGridDashedLine();
