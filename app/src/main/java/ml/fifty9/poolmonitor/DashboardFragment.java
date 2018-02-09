@@ -1,6 +1,8 @@
 package ml.fifty9.poolmonitor;
 
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,7 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import ml.fifty9.poolmonitor.model.Charts;
 import ml.fifty9.poolmonitor.model.Pool;
@@ -19,10 +35,11 @@ import ml.fifty9.poolmonitor.model.Stats;
  * A simple {@link Fragment} subclass.
  * @author HemantJ, Aditya Gupta
  */
-//TODO make the UI nice :p
+//TODO (Aditya) make the UI nice :p
 public class DashboardFragment extends Fragment {
 
     private TextView hashRate, lastShare, paid, balance, submittedHashes;
+    LineChart hashChart;
     List<List<Integer>> hashes;
     Charts chart;
     Stats stats;
@@ -36,17 +53,25 @@ public class DashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_dashboard, container, false);
-        chart = ((ParentActivity)this.getActivity()).getChart();
-        stats = ((ParentActivity)this.getActivity()).getStats();
-        hashes = chart.getHashrate();
 
         hashRate = view.findViewById(R.id.hash_rate);
         lastShare = view.findViewById(R.id.last_share_text);
         paid = view.findViewById(R.id.paid_text);
         balance = view.findViewById(R.id.balance_text);
         submittedHashes = view.findViewById(R.id.hash_submitted_text);
+        hashChart = (LineChart) view.findViewById(R.id.hash_rate_chart);
 
-        displayStats();
+        try {
+            chart = ((ParentActivity)this.getActivity()).getChart();
+            stats = ((ParentActivity)this.getActivity()).getStats();
+            hashes = chart.getHashrate();
+
+            displayStats();
+            populateChart();
+        }
+        catch (Exception e) {
+            Log.d("E", e.getLocalizedMessage());
+        }
 
         return view;
     }
@@ -57,13 +82,10 @@ public class DashboardFragment extends Fragment {
         int totalHashes = 0;
 
         for (int i = 0; i < hashes.size(); i++) {
-
             List<Integer> entry = hashes.get(i);
             totalHashes = totalHashes + entry.get(1) * entry.get(2);
             totalTime = totalTime + entry.get(2);
-
         }
-
 
         String hashRate = String.valueOf(totalHashes / totalTime) + " H/sec";
 
@@ -79,9 +101,15 @@ public class DashboardFragment extends Fragment {
 
     public String getDate(String timeStampString) {
 
+        Calendar cal = Calendar.getInstance();
+        TimeZone tz = cal.getTimeZone();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        sdf.setTimeZone(tz);
         Long timeLong = Long.parseLong(timeStampString);
         java.util.Date time=new java.util.Date((long)timeLong*1000);
-        return time.toString();
+        String localTime = sdf.format(time);
+
+        return localTime;
     }
 
     public void displayStats() {
@@ -116,6 +144,115 @@ public class DashboardFragment extends Fragment {
         else
             hashRate.setText(getHashRate());
 
+    }
+
+    public void populateChart() {
+
+        if (null == hashes) {
+            Log.d("data","No hash data found");
+        }
+
+        else {
+
+            List<Integer> hashList = new ArrayList<Integer>();
+
+            List<Entry> entries = new ArrayList<Entry>();
+
+            for (int i = 0; i < hashes.size(); i++) {
+                for (int j = 0; j < hashes.get(i).get(2); j++) {
+                    hashList.add(hashes.get(i).get(1));
+                }
+            }
+
+            for (int i = 0; i< hashList.size(); i++) {
+                entries.add(new Entry(i, hashList.get(i)));
+            }
+
+            LineDataSet dataSet = new LineDataSet(entries, "");
+//            dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+//            dataSet.setColor(R.color.colorAccent);
+//            dataSet.setValueTextColor(R.color.cardview_dark_background);
+//            dataSet.setCircleRadius(0);
+//
+//
+//
+//            LineData lineData = new LineData(dataSet);
+//            lineData.setValueTextSize(0);
+//            lineData.setDrawValues(false);
+//
+//
+//            Description description = new Description();
+//            description.setText("Hashes Submitted");
+//
+//            XAxis xAxis = hashChart.getXAxis();
+//            YAxis yAxis = hashChart.getAxisLeft();
+//            xAxis.setEnabled(false);
+//            yAxis.setEnabled(false);
+
+            dataSet.disableDashedLine();
+            dataSet.disableDashedHighlightLine();
+            dataSet.setColor(Color.GRAY);
+            dataSet.setFillColor(Color.GRAY);
+            dataSet.setDrawFilled(true);
+            dataSet.setFillAlpha(255);
+            dataSet.setValueTextColor(Color.BLACK);
+            dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            dataSet.setCircleRadius(0);
+
+            LineData lineData = new LineData(dataSet);
+            lineData.setValueTextSize(0);
+            lineData.setDrawValues(false);
+
+            Legend legend = hashChart.getLegend();
+            legend.setEnabled(false);
+
+            YAxis leftAxis = hashChart.getAxisLeft();
+            leftAxis.setDrawLabels(false); // no axis labels
+            leftAxis.setDrawAxisLine(false); // no axis line
+            leftAxis.setDrawGridLines(false); // no grid lines
+            leftAxis.disableAxisLineDashedLine();
+            leftAxis.removeAllLimitLines();
+            leftAxis.disableGridDashedLine();
+
+            YAxis rightAxis = hashChart.getAxisRight();
+            rightAxis.setDrawLabels(false); // no axis labels
+            rightAxis.setDrawAxisLine(false); // no axis line
+            rightAxis.setDrawGridLines(false); // no grid lines
+            rightAxis.disableAxisLineDashedLine();
+            rightAxis.removeAllLimitLines();
+            rightAxis.disableGridDashedLine();
+
+            XAxis xAxis = hashChart.getXAxis();
+            xAxis.setDrawLabels(false); // no axis labels
+            xAxis.setDrawAxisLine(false); // no axis line
+            xAxis.setDrawGridLines(false); // no grid lines
+            xAxis.disableAxisLineDashedLine();
+            xAxis.removeAllLimitLines();
+            xAxis.disableGridDashedLine();
+
+
+//            hashChart.setData(lineData);
+//            hashChart.getAxisLeft().setDrawLabels(false);
+//            hashChart.getAxisRight().setDrawLabels(false);
+//            hashChart.getXAxis().setDrawLabels(false);
+//            hashChart.setDescription(description);
+//            hashChart.setDrawGridBackground(false);
+//            hashChart.setDrawBorders(false);
+//            hashChart.setNoDataText("No Hashes Found");
+//            hashChart.getLegend().setEnabled(false);
+//            hashChart.animateX(2500);
+//            hashChart.invalidate();
+
+            hashChart.setBackgroundColor(Color.WHITE);
+            Description description = new Description();
+            description.setTextAlign(Paint.Align.LEFT);
+            description.setText("Hashes Submitted");
+            description.setPosition(0,0);
+            hashChart.setDescription(description);
+            hashChart.setData(lineData);
+            hashChart.invalidate();
+            hashChart.fitScreen();
+        }
     }
 
 

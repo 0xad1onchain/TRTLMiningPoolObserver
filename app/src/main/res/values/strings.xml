@@ -9,4 +9,5 @@
 
     <string name="null_value_string">0</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hash_chart_description">Hashes Submitted</string>
 </resources>
