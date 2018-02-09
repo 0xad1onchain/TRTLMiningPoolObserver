@@ -169,26 +169,6 @@ public class DashboardFragment extends Fragment {
             }
 
             LineDataSet dataSet = new LineDataSet(entries, "");
-//            dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-//            dataSet.setColor(R.color.colorAccent);
-//            dataSet.setValueTextColor(R.color.cardview_dark_background);
-//            dataSet.setCircleRadius(0);
-//
-//
-//
-//            LineData lineData = new LineData(dataSet);
-//            lineData.setValueTextSize(0);
-//            lineData.setDrawValues(false);
-//
-//
-//            Description description = new Description();
-//            description.setText("Hashes Submitted");
-//
-//            XAxis xAxis = hashChart.getXAxis();
-//            YAxis yAxis = hashChart.getAxisLeft();
-//            xAxis.setEnabled(false);
-//            yAxis.setEnabled(false);
-
             dataSet.disableDashedLine();
             dataSet.disableDashedHighlightLine();
             dataSet.setColor(Color.GRAY);
@@ -230,18 +210,6 @@ public class DashboardFragment extends Fragment {
             xAxis.removeAllLimitLines();
             xAxis.disableGridDashedLine();
 
-
-//            hashChart.setData(lineData);
-//            hashChart.getAxisLeft().setDrawLabels(false);
-//            hashChart.getAxisRight().setDrawLabels(false);
-//            hashChart.getXAxis().setDrawLabels(false);
-//            hashChart.setDescription(description);
-//            hashChart.setDrawGridBackground(false);
-//            hashChart.setDrawBorders(false);
-//            hashChart.setNoDataText("No Hashes Found");
-//            hashChart.getLegend().setEnabled(false);
-//            hashChart.animateX(2500);
-//            hashChart.invalidate();
 
             hashChart.setBackgroundColor(Color.WHITE);
             Description description = new Description();
