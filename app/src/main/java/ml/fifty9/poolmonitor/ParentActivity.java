@@ -104,8 +104,8 @@ public class ParentActivity extends AppCompatActivity {
                 .enqueue(new Callback<Pool>() {
                     @Override
                     public void onResponse(Call<Pool> call, Response<Pool> response) {
-                        Log.d("Response from API",
-                                response.body().getCharts().getPayments().get(0).get(0).toString());
+//                        Log.d("Response from API",
+//                                response.body().getCharts().getPayments().get(0).get(0).toString());
                         setAPIObjects(response);
                         inflateTabs();
                     }

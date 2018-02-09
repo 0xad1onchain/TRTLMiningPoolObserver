@@ -24,6 +24,8 @@ public class DashboardFragment extends Fragment {
 
     private TextView hashRate, lastShare, paid, balance, submittedHashes;
     List<List<Integer>> hashes;
+    Charts chart;
+    Stats stats;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -34,8 +36,8 @@ public class DashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_dashboard, container, false);
-        Charts chart = ((ParentActivity)this.getActivity()).getChart();
-        Stats stats = ((ParentActivity)this.getActivity()).getStats();
+        chart = ((ParentActivity)this.getActivity()).getChart();
+        stats = ((ParentActivity)this.getActivity()).getStats();
         hashes = chart.getHashrate();
 
         hashRate = view.findViewById(R.id.hash_rate);
@@ -44,12 +46,7 @@ public class DashboardFragment extends Fragment {
         balance = view.findViewById(R.id.balance_text);
         submittedHashes = view.findViewById(R.id.hash_submitted_text);
 
-
-        balance.setText(convertCoin(stats.getBalance()));
-        paid.setText(convertCoin(stats.getPaid()));
-        submittedHashes.setText(stats.getHashes());
-        lastShare.setText(getDate(stats.getLastShare()));
-        hashRate.setText(getHashRate());
+        displayStats();
 
         return view;
     }
@@ -68,7 +65,7 @@ public class DashboardFragment extends Fragment {
         }
 
 
-        String hashRate = String.valueOf(totalHashes / totalTime) + " H/s";
+        String hashRate = String.valueOf(totalHashes / totalTime) + " H/sec";
 
         return hashRate;
 
@@ -77,7 +74,7 @@ public class DashboardFragment extends Fragment {
     public String convertCoin(String coin) {
         int coins = Integer.parseInt(coin);
         coins = coins/100;
-        return String.valueOf(coins);
+        return String.valueOf(coins) + " TRTL";
     }
 
     public String getDate(String timeStampString) {
@@ -86,6 +83,41 @@ public class DashboardFragment extends Fragment {
         java.util.Date time=new java.util.Date((long)timeLong*1000);
         return time.toString();
     }
+
+    public void displayStats() {
+
+        String bal = stats.getBalance();
+        if (null == bal)
+            balance.setText(R.string.null_value_string);
+        else
+            balance.setText(convertCoin(bal));
+
+        String paidBal = stats.getPaid();
+        if (null == paidBal)
+            paid.setText(R.string.null_value_string);
+        else
+            paid.setText(convertCoin(paidBal));
+
+        String hashes = stats.getHashes();
+        if (null == hashes)
+            submittedHashes.setText(R.string.null_value_string);
+        else
+            submittedHashes.setText(stats.getHashes());
+
+        String lastShareString = stats.getLastShare();
+        if (null == lastShareString)
+            lastShare.setText(R.string.null_value_string);
+        else
+            lastShare.setText(getDate(stats.getLastShare()));
+
+        String hashRateString = getHashRate();
+        if (null == hashRateString)
+            hashRate.setText(R.string.null_value_string);
+        else
+            hashRate.setText(getHashRate());
+
+    }
+
 
 
 }
