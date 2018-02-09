@@ -26,9 +26,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-import ml.fifty9.poolmonitor.model.Charts;
-import ml.fifty9.poolmonitor.model.Pool;
-import ml.fifty9.poolmonitor.model.Stats;
+import ml.fifty9.poolmonitor.model.statsaddress.Charts;
+import ml.fifty9.poolmonitor.model.statsaddress.Stats;
 
 /**
  * A simple {@link Fragment} subclass.

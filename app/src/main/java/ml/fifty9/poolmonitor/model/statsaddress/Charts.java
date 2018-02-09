@@ -1,4 +1,4 @@
-package ml.fifty9.poolmonitor.model;
+package ml.fifty9.poolmonitor.model.statsaddress;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -10,12 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
 
-import ml.fifty9.poolmonitor.model.Charts;
-import ml.fifty9.poolmonitor.model.Pool;
-import ml.fifty9.poolmonitor.model.Stats;
+import ml.fifty9.poolmonitor.model.statsaddress.Charts;
+import ml.fifty9.poolmonitor.model.statsaddress.Pool;
+import ml.fifty9.poolmonitor.model.statsaddress.Stats;
+import ml.fifty9.poolmonitor.model.pool.StatExample;
 import ml.fifty9.poolmonitor.util.RetrofitAPI;
 import ml.fifty9.poolmonitor.util.RetrofitService;
 import retrofit2.Call;
@@ -104,8 +103,19 @@ public class ParentActivity extends AppCompatActivity {
                 .enqueue(new Callback<Pool>() {
                     @Override
                     public void onResponse(Call<Pool> call, Response<Pool> response) {
-//                        Log.d("Response from API",
-//                                response.body().getCharts().getPayments().get(0).get(0).toString());
+                        retrofitAPI.queryStats()
+                                .enqueue(new Callback<StatExample>() {
+                                    @Override
+                                    public void onResponse(Call<StatExample> call, Response<StatExample> response) {
+                                        Log.d("Stats", response.body().getConfig().
+                                                getPorts().get(0).getDifficulty().toString());
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<StatExample> call, Throwable t) {
+
+                                    }
+                                });
                         setAPIObjects(response);
                         inflateTabs();
                     }

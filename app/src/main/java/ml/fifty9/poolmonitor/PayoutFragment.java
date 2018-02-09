@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ml.fifty9.poolmonitor.model.Pool;
+import ml.fifty9.poolmonitor.model.statsaddress.Pool;
 
 
 /**
