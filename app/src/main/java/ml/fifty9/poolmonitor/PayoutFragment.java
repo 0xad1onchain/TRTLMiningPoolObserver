@@ -33,14 +33,7 @@ public class PayoutFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_payout, container, false);
         paymentText = view.findViewById(R.id.payment);
 
-        Pool pool = ((ParentActivity)this.getActivity()).getPoolPOJO();
-        payments = pool.getPayments();
 
-        if(payments.size() == 0){
-            paymentText.setText("Empty Payments");
-        }else{
-            Log.d("Payout Fragment",payments.get(0));
-        }
 
         return view;
     }

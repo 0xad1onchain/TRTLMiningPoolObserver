@@ -11,6 +11,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import ml.fifty9.poolmonitor.model.pool.Config;
+import ml.fifty9.poolmonitor.model.pool.Network;
 import ml.fifty9.poolmonitor.model.statsaddress.Charts;
 import ml.fifty9.poolmonitor.model.statsaddress.Pool;
 import ml.fifty9.poolmonitor.model.statsaddress.Stats;
@@ -28,9 +33,17 @@ public class ParentActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences, walletPref;
     private String wallet,pool,walletText;
     private RetrofitAPI retrofitAPI;
-    private Charts chartObj;
-    private Stats statObj;
-    private Pool poolPOJO;
+    private ml.fifty9.poolmonitor.model.statsaddress.Charts chartObj;
+    private ml.fifty9.poolmonitor.model.statsaddress.Stats statObj;
+    private ml.fifty9.poolmonitor.model.statsaddress.Pool poolObj;
+
+    private ml.fifty9.poolmonitor.model.pool.Charts chartPOJO;
+    private ml.fifty9.poolmonitor.model.pool.Config configPOJO;
+    private ml.fifty9.poolmonitor.model.pool.Network networkPOJO;
+    private ml.fifty9.poolmonitor.model.pool.Pool poolPOJO;
+
+    private boolean addressCall = false;
+    private boolean statsCall = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +59,7 @@ public class ParentActivity extends AppCompatActivity {
         callAPI();
     }
 
-    public Charts getChart() {
+    public ml.fifty9.poolmonitor.model.statsaddress.Charts getChart() {
         return this.chartObj;
     }
 
@@ -54,9 +67,22 @@ public class ParentActivity extends AppCompatActivity {
         return this.statObj;
     }
 
-    public Pool getPoolPOJO(){
-        return this.poolPOJO;
+    public ml.fifty9.poolmonitor.model.statsaddress.Pool getPool(){
+        return this.poolObj;
     }
+
+    public Network getNetwork(){
+        return this.networkPOJO;
+    }
+
+    public Config getConfig(){
+        return this.configPOJO;
+    }
+
+    public ml.fifty9.poolmonitor.model.pool.Charts getChartPOJO() { return this.chartPOJO; }
+
+    public ml.fifty9.poolmonitor.model.pool.Pool getPoolPOJO() { return this.poolPOJO; }
+
 
     private class SectionPagerAdapter extends FragmentPagerAdapter {
 
@@ -103,21 +129,11 @@ public class ParentActivity extends AppCompatActivity {
                 .enqueue(new Callback<Pool>() {
                     @Override
                     public void onResponse(Call<Pool> call, Response<Pool> response) {
-                        retrofitAPI.queryStats()
-                                .enqueue(new Callback<StatExample>() {
-                                    @Override
-                                    public void onResponse(Call<StatExample> call, Response<StatExample> response) {
-                                        Log.d("Stats", response.body().getConfig().
-                                                getPorts().get(0).getDifficulty().toString());
-                                    }
 
-                                    @Override
-                                    public void onFailure(Call<StatExample> call, Throwable t) {
-
-                                    }
-                                });
-                        setAPIObjects(response);
-                        inflateTabs();
+                        setAPIObjectsWallet(response);
+                        addressCall = true;
+                        if (statsCall == true)
+                            inflateTabs();
                     }
 
                     @Override
@@ -125,11 +141,38 @@ public class ParentActivity extends AppCompatActivity {
                         Log.d("Error",t.getMessage());
                     }
                 });
+
+        retrofitAPI.queryStats()
+                .enqueue(new Callback<StatExample>() {
+                    @Override
+                    public void onResponse(Call<StatExample> call, Response<StatExample> response) {
+                        Log.d("Stats", response.body().getConfig().
+                                getPorts().get(0).getDifficulty().toString());
+                        setAPIObjectsStats(response);
+                        Log.d("LOOG", configPOJO.getCoin());
+
+                        statsCall = true;
+                        if (addressCall == true)
+                            inflateTabs();
+                    }
+
+                    @Override
+                    public void onFailure(Call<StatExample> call, Throwable t) {
+                        Log.d("Error",t.getMessage());
+                    }
+                });
     }
 
-    private void setAPIObjects(Response<Pool> response) {
+    private void setAPIObjectsWallet(Response<Pool> response) {
         chartObj = response.body().getCharts();
         statObj = response.body().getStats();
+        poolObj = response.body().getPool();
+    }
+
+    private void setAPIObjectsStats(Response<StatExample> response) {
+        chartPOJO = response.body().getCharts();
+        configPOJO = response.body().getConfig();
+        networkPOJO = response.body().getNetwork();
         poolPOJO = response.body().getPool();
     }
 
@@ -147,4 +190,3 @@ public class ParentActivity extends AppCompatActivity {
     }
 
 }
-

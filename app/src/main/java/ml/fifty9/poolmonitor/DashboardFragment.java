@@ -57,7 +57,7 @@ public class DashboardFragment extends Fragment {
         paid = view.findViewById(R.id.paid_text);
         balance = view.findViewById(R.id.balance_text);
         submittedHashes = view.findViewById(R.id.hash_submitted_text);
-        hashChart = (LineChart) view.findViewById(R.id.hash_rate_chart);
+        hashChart = view.findViewById(R.id.hash_rate_chart);
 
         try {
             chart = ((ParentActivity)this.getActivity()).getChart();
