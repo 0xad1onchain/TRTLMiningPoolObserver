@@ -38,11 +38,11 @@ public class DashboardFragment extends Fragment {
         Stats stats = ((ParentActivity)this.getActivity()).getStats();
         hashes = chart.getHashrate();
 
-        hashRate = (TextView) view.findViewById(R.id.hash_rate);
-        lastShare = (TextView) view.findViewById(R.id.last_share_text);
-        paid = (TextView) view.findViewById(R.id.paid_text);
-        balance = (TextView) view.findViewById(R.id.balance_text);
-        submittedHashes = (TextView) view.findViewById(R.id.hash_submitted_text);
+        hashRate = view.findViewById(R.id.hash_rate);
+        lastShare = view.findViewById(R.id.last_share_text);
+        paid = view.findViewById(R.id.paid_text);
+        balance = view.findViewById(R.id.balance_text);
+        submittedHashes = view.findViewById(R.id.hash_submitted_text);
 
 
         balance.setText(convertCoin(stats.getBalance()));

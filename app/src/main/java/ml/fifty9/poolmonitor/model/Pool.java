@@ -43,6 +43,10 @@ public class Pool {
         return charts;
     }
 
+    public Pool getPool(){
+        return this;
+    }
+
     public void setCharts(Charts charts) {
         this.charts = charts;
     }

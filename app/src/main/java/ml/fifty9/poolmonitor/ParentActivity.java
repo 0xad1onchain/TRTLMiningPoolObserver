@@ -26,21 +26,18 @@ public class ParentActivity extends AppCompatActivity {
     private SectionPagerAdapter mSectionPagerAdapter;
     private ViewPager mViewPager;
     private Toolbar toolbar;
-    private EditText walletAddress;
-    private Button button;
     private SharedPreferences sharedPreferences, walletPref;
     private String wallet,pool,walletText;
     private RetrofitAPI retrofitAPI;
     private Charts chartObj;
     private Stats statObj;
+    private Pool poolPOJO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent);
 
-        walletAddress = findViewById(R.id.wallet_text);
-        button = findViewById(R.id.submit);
         sharedPreferences = this.getSharedPreferences("URL_PREFS", 0);
         walletPref = this.getSharedPreferences("WALLET_PREFS",0);
 
@@ -58,6 +55,9 @@ public class ParentActivity extends AppCompatActivity {
         return this.statObj;
     }
 
+    public Pool getPoolPOJO(){
+        return this.poolPOJO;
+    }
 
     private class SectionPagerAdapter extends FragmentPagerAdapter {
 
@@ -106,7 +106,6 @@ public class ParentActivity extends AppCompatActivity {
                     public void onResponse(Call<Pool> call, Response<Pool> response) {
                         Log.d("Response from API",
                                 response.body().getCharts().getPayments().get(0).get(0).toString());
-
                         setAPIObjects(response);
                         inflateTabs();
                     }
@@ -121,10 +120,10 @@ public class ParentActivity extends AppCompatActivity {
     private void setAPIObjects(Response<Pool> response) {
         chartObj = response.body().getCharts();
         statObj = response.body().getStats();
+        poolPOJO = response.body().getPool();
     }
 
     private void inflateTabs() {
-
         mSectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         mViewPager = findViewById(R.id.container);
         toolbar = findViewById(R.id.toolbar);
@@ -135,7 +134,6 @@ public class ParentActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionPagerAdapter);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
     }
 
 }
