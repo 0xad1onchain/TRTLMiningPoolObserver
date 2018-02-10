@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -33,10 +34,53 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="match_parent">
 
-</android.support.design.widget.CoordinatorLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        </android.support.v4.view.ViewPager>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="match_parent">
+
+        <com.jaredrummler.android.widget.AnimatedSvgView
+            android:id="@+id/animated_svg_view"
+            android:layout_width="360dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="448dp"
+            android:foregroundGravity="center"
+            app:animatedSvgFillColors="@array/democolor"
+            app:animatedSvgFillStart="1200"
+            app:animatedSvgFillTime="1000"
+            app:animatedSvgGlyphStrings="@array/demo"
+            app:animatedSvgImageSizeX="504"
+            app:animatedSvgImageSizeY="672"
+            app:animatedSvgTraceTime="2000"
+            app:animatedSvgTraceTimePerGlyph="1000" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!--<com.jaredrummler.android.widget.AnimatedSvgView-->
+        <!--android:id="@+id/animated_svg_view"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--app:animatedSvgFillColors="@array/turtle_coin_logo_color"-->
+        <!--app:animatedSvgFillStart="1200"-->
+        <!--app:animatedSvgFillTime="1000"-->
+        <!--app:animatedSvgGlyphStrings="@array/turtle_coin_logo_svg"-->
+        <!--app:animatedSvgImageSizeX="400"-->
+        <!--app:animatedSvgImageSizeY="400"-->
+        <!--app:animatedSvgTraceTime="2000"-->
+        <!--app:animatedSvgTraceTimePerGlyph="1000" />-->
+
+</LinearLayout>

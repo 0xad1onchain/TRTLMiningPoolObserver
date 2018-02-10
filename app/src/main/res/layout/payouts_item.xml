@@ -3,47 +3,60 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="8dp"
-    app:cardCornerRadius="8dp"
+    app:cardElevation="1dp"
     android:padding="8dp"
     android:layout_margin="8dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:text="Hemant Joshi"
-            android:padding="8dp"
-            android:textSize="20sp"
-            android:id="@+id/price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_toRightOf="@id/price"
-            android:text="Hemant Joshi"
-            android:padding="8dp"
-            android:textSize="20sp"
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:text="Hemant Joshi"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="12dp"
+                android:textSize="15sp"
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_toRightOf="@id/price"
+                android:text="Hemant Joshi"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:id="@+id/time"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <TextView
             android:textAlignment="center"
             android:layout_below="@id/price"
             android:id="@+id/paymentId"
             android:text="Hemant Joshi"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:padding="8dp"
             android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 

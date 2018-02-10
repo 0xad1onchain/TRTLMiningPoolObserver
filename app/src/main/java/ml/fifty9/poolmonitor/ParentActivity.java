@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+
+import com.jaredrummler.android.widget.AnimatedSvgView;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -31,8 +34,9 @@ public class ParentActivity extends AppCompatActivity {
     private SectionPagerAdapter mSectionPagerAdapter;
     private ViewPager mViewPager;
     private Toolbar toolbar;
+    private AnimatedSvgView svgView;
     private SharedPreferences sharedPreferences, walletPref;
-    private String wallet,pool,walletText;
+    private String pool,walletText;
     private RetrofitAPI retrofitAPI;
     private ml.fifty9.poolmonitor.model.statsaddress.Charts chartObj;
     private ml.fifty9.poolmonitor.model.statsaddress.Stats statObj;
@@ -50,6 +54,9 @@ public class ParentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent);
+
+        svgView = findViewById(R.id.animated_svg_view);
+        svgView.start();
 
         sharedPreferences = this.getSharedPreferences("URL_PREFS", 0);
         walletPref = this.getSharedPreferences("WALLET_PREFS",0);
@@ -157,8 +164,10 @@ public class ParentActivity extends AppCompatActivity {
                         Log.d("LOOG", configPOJO.getCoin());
 
                         statsCall = true;
-                        if (addressCall == true)
+                        if (addressCall == true) {
                             inflateTabs();
+                        }
+
                     }
 
                     @Override
@@ -182,6 +191,7 @@ public class ParentActivity extends AppCompatActivity {
     }
 
     private void inflateTabs() {
+        svgView.setVisibility(View.GONE);
         mSectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         mViewPager = findViewById(R.id.container);
         toolbar = findViewById(R.id.toolbar);
