@@ -1,5 +1,6 @@
 package ml.fifty9.poolmonitor;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -55,8 +56,12 @@ public class ParentActivity extends AppCompatActivity {
 
         walletText = walletPref.getString("wallet","");
         pool = sharedPreferences.getString("url","");
-        retrofitAPI = RetrofitService.getAPI(pool);
-        callAPI();
+        if(walletText.isEmpty() || pool.isEmpty()){
+            startActivity(new Intent(ParentActivity.this, WalletActivity.class));
+        }else{
+            retrofitAPI = RetrofitService.getAPI(pool);
+            callAPI();
+        }
     }
 
     public ml.fifty9.poolmonitor.model.statsaddress.Charts getChart() {

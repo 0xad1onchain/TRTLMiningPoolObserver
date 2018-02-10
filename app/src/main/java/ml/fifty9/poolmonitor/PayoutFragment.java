@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,7 +109,9 @@ public class PayoutFragment extends Fragment {
             time.setText(localTime);
 
             paymentId = holder.paymentId;
-            paymentId.setText(payoutsPOJO.getPaymentId());
+            paymentId.setMovementMethod(LinkMovementMethod.getInstance());
+            String text = "<a href='https://turtle-coin.com/?hash=" + payoutsPOJO.getPaymentId() + "#blockchain_transaction'>" + payoutsPOJO.getPaymentId() + "</a>";
+            paymentId.setText(Html.fromHtml(text));
         }
 
         @Override
