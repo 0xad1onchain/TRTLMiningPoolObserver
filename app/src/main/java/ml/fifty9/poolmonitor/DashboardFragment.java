@@ -1,6 +1,7 @@
 package ml.fifty9.poolmonitor;
 
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,14 +35,14 @@ import ml.fifty9.poolmonitor.model.statsaddress.Stats;
  * A simple {@link Fragment} subclass.
  * @author HemantJ, Aditya Gupta
  */
-//TODO (Aditya) make the UI nice :p
 public class DashboardFragment extends Fragment {
 
-    private TextView hashRate, lastShare, paid, balance, submittedHashes;
+    private TextView hashRate, lastShare, paid, balance, submittedHashes, walletText;
     LineChart hashChart;
     List<List<Integer>> hashes;
     Charts chart;
     Stats stats;
+    private SharedPreferences walletPref;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -51,13 +53,24 @@ public class DashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_dashboard, container, false);
-
+        walletText = view.findViewById(R.id.wallet_address_text);
         hashRate = view.findViewById(R.id.hash_rate);
         lastShare = view.findViewById(R.id.last_share_text);
         paid = view.findViewById(R.id.paid_text);
         balance = view.findViewById(R.id.balance_text);
         submittedHashes = view.findViewById(R.id.hash_submitted_text);
         hashChart = view.findViewById(R.id.hash_rate_chart);
+
+        walletPref = this.getActivity().getSharedPreferences("WALLET_PREFS",0);
+        String walletString = walletPref.getString("wallet","");
+
+        if (walletString.isEmpty()) {
+
+        }
+        else {
+            walletText.setText(walletString);
+        }
+
 
         try {
             chart = ((ParentActivity)this.getActivity()).getChart();

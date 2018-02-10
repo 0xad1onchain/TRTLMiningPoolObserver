@@ -1,6 +1,7 @@
 package ml.fifty9.poolmonitor;
 
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,9 +44,10 @@ public class PoolFragment extends Fragment {
     Network network;
     Config config;
     Pool pool;
-    TextView poolFeeText, paymentThresholdText, minersText, poolHashRateText, minersPaidText, totalPaymentsText, difficultyText, rewardText, updateTimeText, heightText;
+    TextView poolFeeText, paymentThresholdText, minersText, poolHashRateText, minersPaidText, totalPaymentsText, difficultyText, rewardText, updateTimeText, heightText, poolNameText;
     List<List<Integer>> hashes;
     LineChart hashChart;
+    private SharedPreferences poolPreferences;
 
 
     public PoolFragment() {
@@ -57,7 +60,11 @@ public class PoolFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pool, container, false);
 
+        poolPreferences = this.getActivity().getSharedPreferences("URL_PREFS", 0);
+        String poolString = poolPreferences.getString("url","");
+
         poolFeeText = view.findViewById(R.id.fee_text);
+        poolNameText = view.findViewById(R.id.pool_name_text);
         paymentThresholdText = view.findViewById(R.id.payment_threshold);
         minersPaidText = view.findViewById(R.id.miners_paid_text);
         minersText = view.findViewById(R.id.miners_text);
@@ -68,6 +75,18 @@ public class PoolFragment extends Fragment {
         updateTimeText = view.findViewById(R.id.update_time_text);
         heightText = view.findViewById(R.id.height_text);
         hashChart = view.findViewById(R.id.hash_rate_chart);
+
+        if (poolString.isEmpty()) {
+
+        }
+        else {
+            try {
+                URI uri = new URI(poolString);
+                String path = uri.getHost();
+                poolNameText.setText(path);
+            }
+            catch (Exception e) {e.printStackTrace();}
+        }
 
         try {
             chart = ((ParentActivity)this.getActivity()).getChartPOJO();
