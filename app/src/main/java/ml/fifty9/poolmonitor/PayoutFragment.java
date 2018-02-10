@@ -3,14 +3,23 @@ package ml.fifty9.poolmonitor;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
+
+import ml.fifty9.poolmonitor.model.PayoutsPOJO;
 import ml.fifty9.poolmonitor.model.statsaddress.Pool;
 
 
@@ -20,6 +29,10 @@ import ml.fifty9.poolmonitor.model.statsaddress.Pool;
 public class PayoutFragment extends Fragment {
     private List<String> payments;
     private TextView paymentText;
+    private String[] paymentDetails;
+    private ArrayList<PayoutsPOJO> payouts;
+    private RecyclerView recyclerView;
+    private RecyclerAdapter adapter;
 
     public PayoutFragment() {
         // Required empty public constructor
@@ -32,10 +45,85 @@ public class PayoutFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_payout, container, false);
         paymentText = view.findViewById(R.id.payment);
+        recyclerView = view.findViewById(R.id.recyclerView);
 
+        paymentText = view.findViewById(R.id.payment);
+        payouts = new ArrayList<>();
 
+        Pool pool = ((ParentActivity)this.getActivity()).getPool();
+        payments = pool.getPayments();
+
+        if(payments.size() == 0){
+            recyclerView.setVisibility(View.GONE);
+            paymentText.setVisibility(View.VISIBLE);
+            paymentText.setText("Empty Payments");
+        }else{
+            recyclerView.setVisibility(View.VISIBLE);
+            paymentText.setVisibility(View.GONE);
+            for(int i = 0; i < payments.size(); i+=2){
+                paymentDetails = payments.get(i).split(":",3);
+                String id = paymentDetails[0];
+                String price = String.valueOf(Float.valueOf(paymentDetails[1])/100) + " TRTL";
+                String timeStamp = payments.get(i+1);
+                payouts.add(new PayoutsPOJO(id,price,timeStamp));
+            }
+            adapter = new RecyclerAdapter(payouts);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            adapter.notifyDataSetChanged();
+        }
 
         return view;
+    }
+
+    private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
+        private ArrayList<PayoutsPOJO> payouts;
+
+        public RecyclerAdapter(ArrayList<PayoutsPOJO> payouts){
+            this.payouts = payouts;
+        }
+
+        @Override
+        public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = getLayoutInflater().inflate(R.layout.payouts_item,parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
+            PayoutsPOJO payoutsPOJO = payouts.get(position);
+            TextView price, time, paymentId;
+
+            price = holder.price;
+            price.setText(payoutsPOJO.getPrice());
+
+            time = holder.time;
+            Calendar cal = Calendar.getInstance();
+            TimeZone tz = cal.getTimeZone();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            sdf.setTimeZone(tz);
+            java.util.Date datetime = new java.util.Date((Long.valueOf(payoutsPOJO.getTimeStamp())* 1000));
+            String localTime = sdf.format(datetime);
+            time.setText(localTime);
+
+            paymentId = holder.paymentId;
+            paymentId.setText(payoutsPOJO.getPaymentId());
+        }
+
+        @Override
+        public int getItemCount() {
+            return payouts.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder{
+            private TextView price, time, paymentId;
+            public ViewHolder(View itemView) {
+                super(itemView);
+                price = itemView.findViewById(R.id.price);
+                time = itemView.findViewById(R.id.time);
+                paymentId = itemView.findViewById(R.id.paymentId);
+            }
+        }
     }
 
 }
