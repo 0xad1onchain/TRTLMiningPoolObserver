@@ -31,6 +31,11 @@ public class WalletActivity extends AppCompatActivity implements AdapterView.OnI
         sharedPreferences = this.getSharedPreferences("URL_PREFS", 0);
         walletPref = this.getSharedPreferences("WALLET_PREFS",0);
 
+        String walletString = walletPref.getString("wallet", "");
+        if(!walletString.isEmpty()) {
+            walletAddress.setText(walletString);
+        }
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.
                 createFromResource(this,R.array.categories,android.R.layout.simple_spinner_item);
 
