@@ -28,6 +28,9 @@ import ml.fifty9.poolmonitor.model.statsaddress.Charts;
 import ml.fifty9.poolmonitor.model.statsaddress.Pool;
 import ml.fifty9.poolmonitor.model.statsaddress.Stats;
 import ml.fifty9.poolmonitor.model.pool.StatExample;
+import ml.fifty9.poolmonitor.service.ReminderTasks;
+import ml.fifty9.poolmonitor.service.ReminderUtility;
+import ml.fifty9.poolmonitor.service.TRTLService;
 import ml.fifty9.poolmonitor.util.RetrofitAPI;
 import ml.fifty9.poolmonitor.util.RetrofitService;
 import retrofit2.Call;
@@ -72,8 +75,10 @@ public class ParentActivity extends AppCompatActivity {
         if(walletText.isEmpty() || pool.isEmpty()){
             startActivity(new Intent(ParentActivity.this, WalletActivity.class));
         }else{
+            ReminderUtility.scheduleReminder(this);
             retrofitAPI = RetrofitService.getAPI(pool);
             callAPI();
+            setUpSharedPrefs();
         }
     }
 
@@ -102,7 +107,9 @@ public class ParentActivity extends AppCompatActivity {
     public ml.fifty9.poolmonitor.model.pool.Pool getPoolPOJO() { return this.poolPOJO; }
 
     public void setUpSharedPrefs(){
-
+        Intent intent = new Intent(ParentActivity.this, TRTLService.class);
+        intent.setAction(ReminderTasks.ACTION_TURTLE);
+        startService(intent);
     }
 
     private class SectionPagerAdapter extends FragmentPagerAdapter {
