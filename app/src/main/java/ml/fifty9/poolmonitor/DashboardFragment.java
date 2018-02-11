@@ -87,7 +87,6 @@ public class DashboardFragment extends Fragment {
                 clipboard.setPrimaryClip(clip);
                 Snackbar snackbar = Snackbar
                         .make( view ,"Wallet Address copied to clipboard", Snackbar.LENGTH_SHORT);
-
                 snackbar.show();
             }
         });

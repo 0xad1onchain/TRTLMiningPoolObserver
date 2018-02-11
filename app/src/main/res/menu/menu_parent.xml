@@ -17,7 +17,7 @@
     <item
         android:id="@+id/refresh"
         android:title="Refresh"
-        android:icon="@drawable/ic_refresh_black_48dp"
+        android:icon="@drawable/ic_refresh_white_48dp"
         android:iconTint="#ffffff"
         app:showAsAction="always" />
 

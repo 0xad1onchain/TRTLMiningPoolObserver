@@ -238,7 +238,7 @@ public class ParentActivity extends AppCompatActivity {
                 startActivity(new Intent(ParentActivity.this, SettingsActivity.class));
                 return true;
             case R.id.refresh:
-
+                callAPI();
                 return false;
         }
         return super.onOptionsItemSelected(item);
