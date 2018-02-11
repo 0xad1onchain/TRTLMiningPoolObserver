@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ import ml.fifty9.poolmonitor.model.pool.Pool;
 public class PoolFragment extends Fragment {
 
     Charts chart;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     Network network;
     Config config;
     Pool pool;
@@ -63,6 +65,7 @@ public class PoolFragment extends Fragment {
         poolPreferences = this.getActivity().getSharedPreferences("URL_PREFS", 0);
         String poolString = poolPreferences.getString("url","");
 
+        mSwipeRefreshLayout = view.findViewById(R.id.swipePoolRefreshLayout);
         poolFeeText = view.findViewById(R.id.fee_text);
         poolNameText = view.findViewById(R.id.pool_name_text);
         paymentThresholdText = view.findViewById(R.id.payment_threshold);
@@ -103,25 +106,21 @@ public class PoolFragment extends Fragment {
             Log.d("E", e.getLocalizedMessage());
         }
 
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refresh();
+            }
+        });
+
         return view;
     }
 
-    public String getHashRate() {
-
-        int totalTime = 0;
-        int totalHashes = 0;
-
-        for (int i = 0; i < hashes.size(); i++) {
-            List<Integer> entry = hashes.get(i);
-            totalHashes = totalHashes + entry.get(1) * entry.get(2);
-            totalTime = totalTime + entry.get(2);
-        }
-
-        String hashRate = String.valueOf(totalHashes / totalTime) + " H/sec";
-
-        return hashRate;
-
+    public void refresh() {
+        ((ParentActivity)this.getActivity()).callAPI();
     }
+
 
     public String convertCoin(int coins) {
         coins = coins/100;

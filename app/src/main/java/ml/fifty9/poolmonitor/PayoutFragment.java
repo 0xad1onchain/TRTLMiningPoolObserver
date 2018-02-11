@@ -3,6 +3,7 @@ package ml.fifty9.poolmonitor;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -35,6 +36,7 @@ public class PayoutFragment extends Fragment {
     private ArrayList<PayoutsPOJO> payouts;
     private RecyclerView recyclerView;
     private RecyclerAdapter adapter;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public PayoutFragment() {
         // Required empty public constructor
@@ -46,6 +48,8 @@ public class PayoutFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_payout, container, false);
+
+        mSwipeRefreshLayout = view.findViewById(R.id.swipePayoutRefreshLayout);
         paymentText = view.findViewById(R.id.payment);
         recyclerView = view.findViewById(R.id.recyclerView);
 
@@ -75,7 +79,19 @@ public class PayoutFragment extends Fragment {
             adapter.notifyDataSetChanged();
         }
 
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refresh();
+            }
+        });
+
         return view;
+    }
+
+    public void refresh() {
+        ((ParentActivity)this.getActivity()).callAPI();
     }
 
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
