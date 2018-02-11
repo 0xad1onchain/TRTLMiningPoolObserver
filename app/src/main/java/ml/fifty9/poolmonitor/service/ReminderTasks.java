@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import ml.fifty9.poolmonitor.model.statsaddress.Charts;
 import ml.fifty9.poolmonitor.model.statsaddress.Pool;
@@ -69,12 +71,27 @@ public class ReminderTasks {
                     public String getDate(String timeStampString) {
 
                         Calendar cal = Calendar.getInstance();
+                        java.util.Date currentLocalTime = cal.getTime();
                         TimeZone tz = cal.getTimeZone();
                         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         sdf.setTimeZone(tz);
                         Long timeLong = Long.parseLong(timeStampString);
                         java.util.Date time=new java.util.Date((long)timeLong*1000);
                         String localTime = sdf.format(time);
+
+                        Date startDate = time;
+                        Date endDate   = cal.getTime();
+
+                        long duration  = endDate.getTime() - startDate.getTime();
+                        long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
+                        long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
+
+                        if (diffInMinutes > 60) {
+                            localTime = diffInHours + " Hours ago";
+                        }
+                        else {
+                            localTime = diffInMinutes + " Minutes ago";
+                        }
 
                         return localTime;
                     }
