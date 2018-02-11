@@ -6,8 +6,8 @@ android {
         applicationId "ml.fifty9.poolmonitor"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -10,4 +10,7 @@
     <string name="null_value_string">0</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hash_chart_description">Hashes Submitted</string>
+
+    <string name="aditya_trtl_address">TRTLux32vos9TtGNRQTux4WLFQTBX2ii3RMzGsrbN2dKatwucquqQRmUUzXkuiNyEA5NCqPUiP3SeSeJVT9bpW3SGyWKmRcoT3Z</string>
+    <string name="hemant_trtl_address">TRTLv41iNdPeTTj4h8CDniJHyHbGuCZcZZXRpTNLY61mPfGogXdptLiaLnur3Wkrpa5kc3KGmwtnu83HY27xhtcrQe9TgrfCjks</string>
 </resources>
