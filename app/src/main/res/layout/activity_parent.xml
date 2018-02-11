@@ -20,7 +20,6 @@
             app:layout_scrollFlags="scroll|enterAlways"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="Pool Monitor"/>
 
@@ -68,19 +67,5 @@
         </LinearLayout>
 
     </RelativeLayout>
-
-    <!--<com.jaredrummler.android.widget.AnimatedSvgView-->
-        <!--android:id="@+id/animated_svg_view"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--app:animatedSvgFillColors="@array/turtle_coin_logo_color"-->
-        <!--app:animatedSvgFillStart="1200"-->
-        <!--app:animatedSvgFillTime="1000"-->
-        <!--app:animatedSvgGlyphStrings="@array/turtle_coin_logo_svg"-->
-        <!--app:animatedSvgImageSizeX="400"-->
-        <!--app:animatedSvgImageSizeY="400"-->
-        <!--app:animatedSvgTraceTime="2000"-->
-        <!--app:animatedSvgTraceTimePerGlyph="1000" />-->
 
 </LinearLayout>

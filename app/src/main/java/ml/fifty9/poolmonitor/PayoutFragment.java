@@ -2,6 +2,7 @@ package ml.fifty9.poolmonitor;
 
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -36,6 +38,7 @@ public class PayoutFragment extends Fragment {
     private ArrayList<PayoutsPOJO> payouts;
     private RecyclerView recyclerView;
     private RecyclerAdapter adapter;
+    private View view;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public PayoutFragment() {
@@ -50,10 +53,8 @@ public class PayoutFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_payout, container, false);
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipePayoutRefreshLayout);
-        paymentText = view.findViewById(R.id.payment);
         recyclerView = view.findViewById(R.id.recyclerView);
-
-        paymentText = view.findViewById(R.id.payment);
+        this.view = view.findViewById(R.id.container);
         payouts = new ArrayList<>();
 
         Pool pool = ((ParentActivity)this.getActivity()).getPool();
@@ -61,11 +62,11 @@ public class PayoutFragment extends Fragment {
 
         if(payments.size() == 0){
             recyclerView.setVisibility(View.GONE);
-            paymentText.setVisibility(View.VISIBLE);
-            paymentText.setText("Empty Payments");
+            Snackbar.make(this.view, "Payouts Empty",Snackbar.LENGTH_INDEFINITE).show();
+//            paymentText.setVisibility(View.VISIBLE);
+//            paymentText.setText("Empty Payments");
         }else{
             recyclerView.setVisibility(View.VISIBLE);
-            paymentText.setVisibility(View.GONE);
             for(int i = 0; i < payments.size(); i+=2){
                 paymentDetails = payments.get(i).split(":",3);
                 String id = paymentDetails[0];
