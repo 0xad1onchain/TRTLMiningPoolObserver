@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ import ml.fifty9.poolmonitor.model.statsaddress.Stats;
 public class DashboardFragment extends Fragment {
 
     private TextView hashRate, lastShare, paid, balance, submittedHashes, walletText;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     LineChart hashChart;
     List<List<Integer>> hashes;
     Charts chart;
@@ -53,6 +55,8 @@ public class DashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_dashboard, container, false);
+
+        mSwipeRefreshLayout = view.findViewById(R.id.swipeDashboardRefreshLayout);
         walletText = view.findViewById(R.id.wallet_address_text);
         hashRate = view.findViewById(R.id.hash_rate);
         lastShare = view.findViewById(R.id.last_share_text);
@@ -81,10 +85,23 @@ public class DashboardFragment extends Fragment {
             populateChart();
         }
         catch (Exception e) {
+            e.printStackTrace();
             Log.d("E", e.getLocalizedMessage());
         }
 
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refresh();
+            }
+        });
+
         return view;
+    }
+
+    public void refresh() {
+        ((ParentActivity)this.getActivity()).callAPI();
     }
 
     public String getHashRate() {

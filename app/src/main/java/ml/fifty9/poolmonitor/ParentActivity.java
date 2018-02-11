@@ -136,7 +136,7 @@ public class ParentActivity extends AppCompatActivity {
 
     }
 
-    private void callAPI() {
+    void callAPI() {
         retrofitAPI.queryDashboardStats(walletText)
                 .enqueue(new Callback<Pool>() {
                     @Override
@@ -144,8 +144,11 @@ public class ParentActivity extends AppCompatActivity {
 
                         setAPIObjectsWallet(response);
                         addressCall = true;
-                        if (statsCall == true)
+                        if (statsCall == true) {
                             inflateTabs();
+                            statsCall = false;
+                            addressCall = false;
+                        }
                     }
 
                     @Override
@@ -166,6 +169,8 @@ public class ParentActivity extends AppCompatActivity {
                         statsCall = true;
                         if (addressCall == true) {
                             inflateTabs();
+                            statsCall = false;
+                            addressCall = false;
                         }
 
                     }
