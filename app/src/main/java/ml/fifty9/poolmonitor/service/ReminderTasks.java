@@ -3,6 +3,10 @@ package ml.fifty9.poolmonitor.service;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
+
 import ml.fifty9.poolmonitor.model.statsaddress.Charts;
 import ml.fifty9.poolmonitor.model.statsaddress.Pool;
 import ml.fifty9.poolmonitor.model.statsaddress.Stats;
@@ -43,13 +47,38 @@ public class ReminderTasks {
                     @Override
                     public void onResponse(Call<Pool> call, Response<Pool> response) {
                         stats = response.body().getStats();
-                        NotificationUtils.remindUserAboutTRTL(context, String.valueOf(Integer.valueOf(stats.getPaid()) / 100) + " TRTL",stats.getHashes());
+                        String paidString = stats.getPaid();
+                        String balanceString = stats.getBalance();
+                        String lastShareString = stats.getLastShare();
+                        balanceString = "Balance: " + convertCoin(balanceString);
+                        String finalString = "Paid: " + convertCoin(paidString) + "\nLast Share Submitted: " + getDate(lastShareString);
+                        NotificationUtils.remindUserAboutTRTL(context, balanceString, finalString,stats.getHashes());
                     }
 
                     @Override
                     public void onFailure(Call<Pool> call, Throwable t) {
 
                     }
+
+                    public String convertCoin(String coin) {
+                        int coins = Integer.parseInt(coin);
+                        coins = coins/100;
+                        return String.valueOf(coins) + " TRTL";
+                    }
+
+                    public String getDate(String timeStampString) {
+
+                        Calendar cal = Calendar.getInstance();
+                        TimeZone tz = cal.getTimeZone();
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        sdf.setTimeZone(tz);
+                        Long timeLong = Long.parseLong(timeStampString);
+                        java.util.Date time=new java.util.Date((long)timeLong*1000);
+                        String localTime = sdf.format(time);
+
+                        return localTime;
+                    }
                 });
     }
+
 }

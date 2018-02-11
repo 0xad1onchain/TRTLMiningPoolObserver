@@ -21,7 +21,7 @@ public class NotificationUtils {
     private static final String TRTL_NOTIFICATION_CHANNEL = "trtl";
     private static final int TRTL_MINING_REMINDER_ID = 1234;
 
-    public static void remindUserAboutTRTL(Context context, String price, String hashRate){
+    public static void remindUserAboutTRTL(Context context, String balanceTitle, String content, String hashRate){
         NotificationManager notificationManager = (NotificationManager)
                                                     context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -37,9 +37,9 @@ public class NotificationUtils {
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setLargeIcon(largeIcon(context))
-                .setContentTitle("Pool Monitor")
-                .setContentText(price)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(price))
+                .setContentTitle(balanceTitle)
+                .setContentText(content)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(content))
                 .setOngoing(true)
                 .setAutoCancel(false);
 
@@ -49,7 +49,7 @@ public class NotificationUtils {
 
     private static Bitmap largeIcon(Context context) {
         Resources res = context.getResources();
-        Bitmap largeIcon = BitmapFactory.decodeResource(res, R.drawable.ic_stat_name);
+        Bitmap largeIcon = BitmapFactory.decodeResource(res, R.drawable.turtlecoin_stacked_color);
         return largeIcon;
     }
 }
