@@ -1,10 +1,14 @@
 package ml.fifty9.poolmonitor;
 
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -75,6 +79,18 @@ public class DashboardFragment extends Fragment {
             walletText.setText(walletString);
         }
 
+        walletText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Wallet Address", walletText.getText());
+                clipboard.setPrimaryClip(clip);
+                Snackbar snackbar = Snackbar
+                        .make( view ,"Wallet Address copied to clipboard", Snackbar.LENGTH_SHORT);
+
+                snackbar.show();
+            }
+        });
 
         try {
             chart = ((ParentActivity)this.getActivity()).getChart();

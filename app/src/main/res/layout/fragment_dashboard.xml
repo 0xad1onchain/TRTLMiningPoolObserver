@@ -33,7 +33,7 @@
                     android:text="Wallet"
                     android:id="@+id/wallet_address_text"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:clickable="true"
                     android:paddingTop="4sp"
                     android:paddingBottom="4sp"
                     android:textSize="16sp"/>
