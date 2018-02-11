@@ -2,6 +2,7 @@ package ml.fifty9.poolmonitor;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.jaredrummler.android.widget.AnimatedSvgView;
@@ -38,6 +41,7 @@ public class ParentActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences, walletPref;
     private String pool,walletText;
     private RetrofitAPI retrofitAPI;
+    private View view;
     private ml.fifty9.poolmonitor.model.statsaddress.Charts chartObj;
     private ml.fifty9.poolmonitor.model.statsaddress.Stats statObj;
     private ml.fifty9.poolmonitor.model.statsaddress.Pool poolObj;
@@ -56,6 +60,7 @@ public class ParentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_parent);
 
         svgView = findViewById(R.id.animated_svg_view);
+        view = findViewById(R.id.main_content);
         svgView.start();
 
         sharedPreferences = this.getSharedPreferences("URL_PREFS", 0);
@@ -136,12 +141,11 @@ public class ParentActivity extends AppCompatActivity {
 
     }
 
-    void callAPI() {
+    protected void callAPI() {
         retrofitAPI.queryDashboardStats(walletText)
                 .enqueue(new Callback<Pool>() {
                     @Override
                     public void onResponse(Call<Pool> call, Response<Pool> response) {
-
                         setAPIObjectsWallet(response);
                         addressCall = true;
                         if (statsCall == true) {
@@ -153,6 +157,8 @@ public class ParentActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Pool> call, Throwable t) {
+                        svgView.setVisibility(View.GONE);
+                        Snackbar.make(view, "Error in Connection",Snackbar.LENGTH_INDEFINITE).show();
                         Log.d("Error",t.getMessage());
                     }
                 });
@@ -177,6 +183,8 @@ public class ParentActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<StatExample> call, Throwable t) {
+                        svgView.setVisibility(View.GONE);
+                        Snackbar.make(view, "Error in Connection",Snackbar.LENGTH_INDEFINITE).show();
                         Log.d("Error",t.getMessage());
                     }
                 });
@@ -209,4 +217,26 @@ public class ParentActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_parent,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.change_address:
+                startActivity(new Intent(ParentActivity.this, WalletActivity.class));
+                return true;
+            case R.id.settings:
+                /*
+                 * Use PreferencesFragment to create Settings
+                 * return false for now
+                 */
+                return false;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
