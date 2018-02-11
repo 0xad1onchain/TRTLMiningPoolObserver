@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -100,6 +101,9 @@ public class ParentActivity extends AppCompatActivity {
 
     public ml.fifty9.poolmonitor.model.pool.Pool getPoolPOJO() { return this.poolPOJO; }
 
+    public void setUpSharedPrefs(){
+
+    }
 
     private class SectionPagerAdapter extends FragmentPagerAdapter {
 
@@ -231,10 +235,10 @@ public class ParentActivity extends AppCompatActivity {
                 startActivity(new Intent(ParentActivity.this, WalletActivity.class));
                 return true;
             case R.id.settings:
-                /*
-                 * Use PreferencesFragment to create Settings
-                 * return false for now
-                 */
+                startActivity(new Intent(ParentActivity.this, SettingsActivity.class));
+                return true;
+            case R.id.refresh:
+
                 return false;
         }
         return super.onOptionsItemSelected(item);

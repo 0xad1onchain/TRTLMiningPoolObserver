@@ -14,4 +14,11 @@
         android:title="Change Address"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/refresh"
+        android:title="Refresh"
+        android:iconTint="#fff"
+        android:icon="@drawable/ic_refresh_black_48dp"
+        app:showAsAction="always" />
+
 </menu>
