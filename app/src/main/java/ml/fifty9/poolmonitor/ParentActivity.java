@@ -83,7 +83,6 @@ public class ParentActivity extends AppCompatActivity {
             ReminderUtility.scheduleReminder(this);
             retrofitAPI = RetrofitService.getAPI(pool);
             callAPI();
-            setUpSharedPrefs();
         }
     }
 
@@ -174,9 +173,16 @@ public class ParentActivity extends AppCompatActivity {
                         setAPIObjectsWallet(response);
                         addressCall = true;
                         if (statsCall == true) {
-                            inflateTabs();
-                            statsCall = false;
-                            addressCall = false;
+
+                            if (null == statObj) {
+                                Snackbar.make(view, "Wallet not found",Snackbar.LENGTH_INDEFINITE).show();
+                            }
+                            else {
+                                inflateTabs();
+                                statsCall = false;
+                                addressCall = false;
+                                setUpSharedPrefs();
+                            }
                         }
                     }
 
@@ -199,9 +205,15 @@ public class ParentActivity extends AppCompatActivity {
 
                         statsCall = true;
                         if (addressCall == true) {
-                            inflateTabs();
-                            statsCall = false;
-                            addressCall = false;
+                            if (null == statObj) {
+                                Snackbar.make(view, "Wallet not found",Snackbar.LENGTH_INDEFINITE).show();
+                            }
+                            else {
+                                inflateTabs();
+                                statsCall = false;
+                                addressCall = false;
+                                setUpSharedPrefs();
+                            }
                         }
 
                     }

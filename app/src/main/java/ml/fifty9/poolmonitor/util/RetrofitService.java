@@ -30,6 +30,8 @@ public class RetrofitService {
     }
 
     private static Retrofit createRetrofit(String url){
+
+
         return new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
