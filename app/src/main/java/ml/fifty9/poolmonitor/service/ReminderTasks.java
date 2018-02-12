@@ -52,8 +52,9 @@ public class ReminderTasks {
                         String paidString = stats.getPaid();
                         String balanceString = stats.getBalance();
                         String lastShareString = stats.getLastShare();
-                        balanceString = "Balance: " + convertCoin(balanceString);
-                        String finalString = "Paid: " + convertCoin(paidString) + "\nLast Share Submitted: " + getDate(lastShareString);
+                        balanceString = getBalanceString(balanceString);
+                        paidString = getPaidString(paidString);
+                        String finalString = paidString + "\nLast Share Submitted: " + getDate(lastShareString);
                         NotificationUtils.remindUserAboutTRTL(context, balanceString, finalString,stats.getHashes());
                     }
 
@@ -94,6 +95,30 @@ public class ReminderTasks {
                         }
 
                         return localTime;
+                    }
+
+                    public String getBalanceString(String balance) {
+                        String balanceString;
+                        if (null == balance) {
+                            balanceString = "Balance: 0 TRTL";
+                        }
+                        else {
+                            balanceString = "Balance: " + convertCoin(balance);
+                        }
+
+                        return balanceString;
+                    }
+
+                    public String getPaidString(String paid) {
+                        String balanceString;
+                        if (null == paid) {
+                            balanceString = "Paid: 0 TRTL";
+                        }
+                        else {
+                            balanceString = "Paid: " + convertCoin(paid);
+                        }
+
+                        return balanceString;
                     }
                 });
     }

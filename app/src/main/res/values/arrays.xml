@@ -15,8 +15,9 @@
         <item>Pool.Turtleco.In</item>
         <item>Trtlpool.Ninja</item>
         <item>Pool.Trtl.Me</item>
-        <item>Cryptoknight.cc/</item>
+        <item>Cryptoknight.cc</item>
         <item>Trtl.Ninja</item>
+        <item>atpool</item>
     </string-array>
 
     <string-array name="urls">
@@ -36,13 +37,13 @@
         <item>http://pool.trtl.me:8117/</item>
         <item>http://78.46.85.142:6229/</item>
         <item>https://trtl.ninja/api/</item>
+        <item>https://turtle.atpool.party/API.php?/</item>
     </string-array>
 
 
 
-    <!--Turtle.Atpool.Party → Sweden ATPool.Party Has Incompatible API-->
+
     <!--Trtl.Mine2gether.Com → Mine2gether Has Incompatible API-->
-    Trtl.Ninja → Trtl.Ninja
 
 
 

@@ -175,13 +175,13 @@ public class DashboardFragment extends Fragment {
 
         String bal = stats.getBalance();
         if (null == bal)
-            balance.setText(R.string.null_value_string);
+            balance.setText("0 TRTL");
         else
             balance.setText(convertCoin(bal));
 
         String paidBal = stats.getPaid();
         if (null == paidBal)
-            paid.setText(R.string.null_value_string);
+            paid.setText("0 TRTL");
         else
             paid.setText(convertCoin(paidBal));
 
