@@ -226,6 +226,7 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
                         Snackbar.make(view, "Error in Connection",Snackbar.LENGTH_INDEFINITE).show();
                         Log.d("Error",t.getMessage());
 
+
                     }
                 });
 
@@ -243,6 +244,7 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
                             if (null == statObj) {
                                 Snackbar.make(view, "Wallet not found",Snackbar.LENGTH_INDEFINITE).show();
                                 notificationCallOK = false;
+
                             }
                             else {
                                 inflateTabs();
