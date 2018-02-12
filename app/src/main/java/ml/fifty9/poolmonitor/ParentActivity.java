@@ -67,6 +67,11 @@ public class ParentActivity extends AppCompatActivity {
         view = findViewById(R.id.main_content);
         svgView.start();
 
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Pool Monitor");
+
         sharedPreferences = this.getSharedPreferences("URL_PREFS", 0);
         walletPref = this.getSharedPreferences("WALLET_PREFS",0);
 
@@ -77,9 +82,16 @@ public class ParentActivity extends AppCompatActivity {
         }else{
             ReminderUtility.scheduleReminder(this);
             retrofitAPI = RetrofitService.getAPI(pool);
-            callAPI();
-            setUpSharedPrefs();
+            //callAPI();
+            //setUpSharedPrefs();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("Menu", "Function Started");
+        getMenuInflater().inflate(R.menu.menu_parent,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     public ml.fifty9.poolmonitor.model.statsaddress.Charts getChart() {
@@ -152,6 +164,8 @@ public class ParentActivity extends AppCompatActivity {
 
     }
 
+
+
     protected void callAPI() {
         retrofitAPI.queryDashboardStats(walletText)
                 .enqueue(new Callback<Pool>() {
@@ -218,21 +232,14 @@ public class ParentActivity extends AppCompatActivity {
         svgView.setVisibility(View.GONE);
         mSectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         mViewPager = findViewById(R.id.container);
-        toolbar = findViewById(R.id.toolbar);
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Pool Monitor");
 
         mViewPager.setAdapter(mSectionPagerAdapter);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_parent,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

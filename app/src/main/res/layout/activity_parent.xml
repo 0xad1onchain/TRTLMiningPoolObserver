@@ -25,6 +25,7 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
+            android:visibility="gone"
             app:tabIndicatorColor="#ffffff"
             app:tabIndicatorHeight="2dp"
             app:tabTextAppearance="?attr/textAppearanceListItem"

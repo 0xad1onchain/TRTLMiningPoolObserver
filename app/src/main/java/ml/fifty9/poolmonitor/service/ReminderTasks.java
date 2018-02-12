@@ -49,13 +49,19 @@ public class ReminderTasks {
                     @Override
                     public void onResponse(Call<Pool> call, Response<Pool> response) {
                         stats = response.body().getStats();
-                        String paidString = stats.getPaid();
-                        String balanceString = stats.getBalance();
-                        String lastShareString = stats.getLastShare();
-                        balanceString = getBalanceString(balanceString);
-                        paidString = getPaidString(paidString);
-                        String finalString = paidString + "\nLast Share Submitted: " + getDate(lastShareString);
-                        NotificationUtils.remindUserAboutTRTL(context, balanceString, finalString,stats.getHashes());
+                        try {
+                            String paidString = stats.getPaid();
+                            String balanceString = stats.getBalance();
+                            String lastShareString = stats.getLastShare();
+                            balanceString = getBalanceString(balanceString);
+                            paidString = getPaidString(paidString);
+                            String finalString = paidString + "\nLast Share Submitted: " + getDate(lastShareString);
+                            NotificationUtils.remindUserAboutTRTL(context, balanceString, finalString,stats.getHashes());
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     }
 
                     @Override
