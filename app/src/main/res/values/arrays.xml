@@ -16,7 +16,7 @@
         <item>Pool.Trtl.Me</item>
         <item>Cryptoknight.cc</item>
         <item>Trtl.Ninja</item>
-        <item>atpool</item>
+        <item>Atpool</item>
     </string-array>
 
     <string-array name="urls">
@@ -35,8 +35,9 @@
         <item>http://pool.trtl.me:8117/</item>
         <item>http://78.46.85.142:6229/</item>
         <item>https://trtl.ninja/api/</item>
-        <item>https://turtle.atpool.party/API.php?/</item>
+        <item>http://turtle-eu.atpool.party:8117/</item>
     </string-array>
+
 
 
 
