@@ -49,7 +49,7 @@ public class NotificationUtils {
 
     private static Bitmap largeIcon(Context context) {
         Resources res = context.getResources();
-        Bitmap largeIcon = BitmapFactory.decodeResource(res, R.drawable.turtlecoin_stacked_color);
+        Bitmap largeIcon = BitmapFactory.decodeResource(res, R.drawable.turtlecoin_symbol_color);
         return largeIcon;
     }
 }
