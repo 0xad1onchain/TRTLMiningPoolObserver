@@ -61,6 +61,8 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
 
     private boolean addressCall = false;
     private boolean statsCall = false;
+    private boolean notificationCallOK = false;
+    static final int SETTINGS = 13;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,30 +124,36 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
     public ml.fifty9.poolmonitor.model.pool.Pool getPoolPOJO() { return this.poolPOJO; }
 
     public void setUpSharedPrefs(){
-        SharedPreferences prefs = this.getSharedPreferences("NOTIFS",0);
-        Intent intent = new Intent(ParentActivity.this, TRTLService.class);
-        if(prefs.getBoolean("ison",true)){
-            intent.setAction(ReminderTasks.ACTION_TURTLE);
-            startService(intent);
-        }else{
-            stopService(intent);
-            NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.cancel(TRTL_MINING_REMINDER_ID);
+
+        if (notificationCallOK) {
+            SharedPreferences prefs = this.getSharedPreferences("NOTIFS", 0);
+            Intent intent = new Intent(ParentActivity.this, TRTLService.class);
+            if (prefs.getBoolean("ison", true)) {
+                intent.setAction(ReminderTasks.ACTION_TURTLE);
+                startService(intent);
+            } else {
+                stopService(intent);
+                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                manager.cancel(TRTL_MINING_REMINDER_ID);
+            }
         }
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals("ison")){
-            boolean isOn = sharedPreferences.getBoolean("ison",true);
-            Intent intent = new Intent(ParentActivity.this, TRTLService.class);
-            if(isOn){
-                intent.setAction(ReminderTasks.ACTION_TURTLE);
-                startService(intent);
-            }else{
-                stopService(intent);
-                NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-                manager.cancel(TRTL_MINING_REMINDER_ID);
+
+        if (notificationCallOK) {
+            if (key.equals("ison")) {
+                boolean isOn = sharedPreferences.getBoolean("ison", true);
+                Intent intent = new Intent(ParentActivity.this, TRTLService.class);
+                if (isOn) {
+                    intent.setAction(ReminderTasks.ACTION_TURTLE);
+                    startService(intent);
+                } else {
+                    stopService(intent);
+                    NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                    manager.cancel(TRTL_MINING_REMINDER_ID);
+                }
             }
         }
     }
@@ -201,12 +209,13 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
 
                             if (null == statObj) {
                                 Snackbar.make(view, "Wallet not found",Snackbar.LENGTH_INDEFINITE).show();
+                                notificationCallOK = false;
                             }
                             else {
                                 inflateTabs();
                                 statsCall = false;
                                 addressCall = false;
-                                setUpSharedPrefs();
+                                notificationCallOK = true;
                             }
                         }
                     }
@@ -216,6 +225,7 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
                         svgView.setVisibility(View.GONE);
                         Snackbar.make(view, "Error in Connection",Snackbar.LENGTH_INDEFINITE).show();
                         Log.d("Error",t.getMessage());
+
                     }
                 });
 
@@ -232,12 +242,13 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
                         if (addressCall == true) {
                             if (null == statObj) {
                                 Snackbar.make(view, "Wallet not found",Snackbar.LENGTH_INDEFINITE).show();
+                                notificationCallOK = false;
                             }
                             else {
                                 inflateTabs();
                                 statsCall = false;
                                 addressCall = false;
-                                setUpSharedPrefs();
+                                notificationCallOK = true;
                             }
                         }
 
@@ -292,7 +303,7 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
                 callAPI();
                 return true;
             case R.id.about:
-                startActivity(new Intent(ParentActivity.this, AboutActivity.class));
+                startActivityForResult(new Intent(ParentActivity.this, AboutActivity.class), SETTINGS);
                 return true;
         }
         return super.onOptionsItemSelected(item);

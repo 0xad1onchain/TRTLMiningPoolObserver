@@ -3,6 +3,7 @@ package ml.fifty9.poolmonitor.service;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,7 +37,7 @@ public class ReminderTasks {
     }
 
     private static void getDataFromAPI(Context context) {
-        String walletText,pool;
+        String walletText,pool, path;
         sharedPreferences = context.getSharedPreferences("URL_PREFS", 0);
         walletPref = context.getSharedPreferences("WALLET_PREFS",0);
 
@@ -44,18 +45,26 @@ public class ReminderTasks {
         pool = sharedPreferences.getString("url","");
         api = RetrofitService.getAPI(pool);
 
+
         api.queryDashboardStats(walletText)
                 .enqueue(new Callback<Pool>() {
                     @Override
                     public void onResponse(Call<Pool> call, Response<Pool> response) {
                         stats = response.body().getStats();
                         try {
+                            String path = "TurtleCoin";
+                            try {
+                                URI uri = new URI(pool);
+                                path = uri.getHost();
+                            }
+                            catch (Exception e) {e.printStackTrace();}
+
                             String paidString = stats.getPaid();
                             String balanceString = stats.getBalance();
                             String lastShareString = stats.getLastShare();
                             balanceString = getBalanceString(balanceString);
                             paidString = getPaidString(paidString);
-                            String finalString = paidString + "\nLast Share Submitted: " + getDate(lastShareString);
+                            String finalString = paidString + "\nLast Share Submitted: " + getDate(lastShareString) + "\nPool: " + path;
                             NotificationUtils.remindUserAboutTRTL(context, balanceString, finalString,stats.getHashes());
                         }
                         catch (Exception e) {

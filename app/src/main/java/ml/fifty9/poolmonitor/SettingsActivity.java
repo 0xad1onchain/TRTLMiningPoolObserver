@@ -1,5 +1,7 @@
 package ml.fifty9.poolmonitor;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ public class SettingsActivity extends AppCompatActivity {
     private CheckBox notifs;
     private SharedPreferences sharedPreferences;
     private boolean isOn;
+    private ParentActivity lol = new ParentActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,8 @@ public class SettingsActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("ison", isOn);
             editor.apply();
+            Intent intent = getIntent();
+            setResult(Activity.RESULT_OK, intent);
         });
 
         SharedPreferences pref = this.getSharedPreferences("NOTIFS",0);

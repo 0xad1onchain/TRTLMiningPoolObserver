@@ -43,7 +43,7 @@ public class NotificationUtils {
                 .setOngoing(true)
                 .setAutoCancel(false);
 
-        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
         notificationManager.notify(TRTL_MINING_REMINDER_ID, builder.build());
     }
 
