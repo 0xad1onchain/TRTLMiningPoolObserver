@@ -216,6 +216,7 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
                                 statsCall = false;
                                 addressCall = false;
                                 notificationCallOK = true;
+                                setUpSharedPrefs();
                             }
                         }
                     }
@@ -251,6 +252,7 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
                                 statsCall = false;
                                 addressCall = false;
                                 notificationCallOK = true;
+                                setUpSharedPrefs();
                             }
                         }
 

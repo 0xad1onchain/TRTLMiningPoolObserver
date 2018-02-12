@@ -2,7 +2,9 @@ package ml.fifty9.poolmonitor.service;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +12,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
+import ml.fifty9.poolmonitor.ParentActivity;
 import ml.fifty9.poolmonitor.R;
 
 /**
@@ -41,6 +44,7 @@ public class NotificationUtils {
                 .setContentText(content)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(content))
                 .setOngoing(true)
+                .setContentIntent(contentIntent(context))
                 .setAutoCancel(false);
 
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
@@ -51,5 +55,15 @@ public class NotificationUtils {
         Resources res = context.getResources();
         Bitmap largeIcon = BitmapFactory.decodeResource(res, R.drawable.turtlecoin_symbol_color);
         return largeIcon;
+    }
+
+    private static PendingIntent contentIntent(Context context){
+        Intent startActivity = new Intent(context, ParentActivity.class);
+        return PendingIntent.getActivity(
+                context,
+                TRTL_MINING_INTENT_ID,
+                startActivity,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
     }
 }
