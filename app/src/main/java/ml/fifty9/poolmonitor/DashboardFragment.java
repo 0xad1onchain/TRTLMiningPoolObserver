@@ -30,8 +30,10 @@ import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import ml.fifty9.poolmonitor.model.statsaddress.Charts;
 import ml.fifty9.poolmonitor.model.statsaddress.Stats;
@@ -152,6 +154,20 @@ public class DashboardFragment extends Fragment {
         java.util.Date time=new java.util.Date((long)timeLong*1000);
         String localTime = sdf.format(time);
 
+        Date startDate = time;
+        Date endDate   = cal.getTime();
+
+        long duration  = endDate.getTime() - startDate.getTime();
+        long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
+        long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
+
+        if (diffInMinutes > 60) {
+            localTime = diffInHours + " Hours ago";
+        }
+        else {
+            localTime = diffInMinutes + " Minutes ago";
+        }
+
         return localTime;
     }
 
@@ -159,13 +175,13 @@ public class DashboardFragment extends Fragment {
 
         String bal = stats.getBalance();
         if (null == bal)
-            balance.setText(R.string.null_value_string);
+            balance.setText("0 TRTL");
         else
             balance.setText(convertCoin(bal));
 
         String paidBal = stats.getPaid();
         if (null == paidBal)
-            paid.setText(R.string.null_value_string);
+            paid.setText("0 TRTL");
         else
             paid.setText(convertCoin(paidBal));
 

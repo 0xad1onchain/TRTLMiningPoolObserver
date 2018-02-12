@@ -1,5 +1,8 @@
 package ml.fifty9.poolmonitor;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
@@ -28,13 +31,16 @@ import ml.fifty9.poolmonitor.model.statsaddress.Charts;
 import ml.fifty9.poolmonitor.model.statsaddress.Pool;
 import ml.fifty9.poolmonitor.model.statsaddress.Stats;
 import ml.fifty9.poolmonitor.model.pool.StatExample;
+import ml.fifty9.poolmonitor.service.ReminderTasks;
+import ml.fifty9.poolmonitor.service.ReminderUtility;
+import ml.fifty9.poolmonitor.service.TRTLService;
 import ml.fifty9.poolmonitor.util.RetrofitAPI;
 import ml.fifty9.poolmonitor.util.RetrofitService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ParentActivity extends AppCompatActivity {
+public class ParentActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
     private SectionPagerAdapter mSectionPagerAdapter;
     private ViewPager mViewPager;
     private Toolbar toolbar;
@@ -43,6 +49,7 @@ public class ParentActivity extends AppCompatActivity {
     private String pool,walletText;
     private RetrofitAPI retrofitAPI;
     private View view;
+    private final int TRTL_MINING_REMINDER_ID = 1234;
     private ml.fifty9.poolmonitor.model.statsaddress.Charts chartObj;
     private ml.fifty9.poolmonitor.model.statsaddress.Stats statObj;
     private ml.fifty9.poolmonitor.model.statsaddress.Pool poolObj;
@@ -64,6 +71,11 @@ public class ParentActivity extends AppCompatActivity {
         view = findViewById(R.id.main_content);
         svgView.start();
 
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Pool Monitor");
+
         sharedPreferences = this.getSharedPreferences("URL_PREFS", 0);
         walletPref = this.getSharedPreferences("WALLET_PREFS",0);
 
@@ -72,9 +84,17 @@ public class ParentActivity extends AppCompatActivity {
         if(walletText.isEmpty() || pool.isEmpty()){
             startActivity(new Intent(ParentActivity.this, WalletActivity.class));
         }else{
+            ReminderUtility.scheduleReminder(this);
             retrofitAPI = RetrofitService.getAPI(pool);
             callAPI();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("Menu", "Function Started");
+        getMenuInflater().inflate(R.menu.menu_parent,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     public ml.fifty9.poolmonitor.model.statsaddress.Charts getChart() {
@@ -102,7 +122,32 @@ public class ParentActivity extends AppCompatActivity {
     public ml.fifty9.poolmonitor.model.pool.Pool getPoolPOJO() { return this.poolPOJO; }
 
     public void setUpSharedPrefs(){
+        SharedPreferences prefs = this.getSharedPreferences("NOTIFS",0);
+        Intent intent = new Intent(ParentActivity.this, TRTLService.class);
+        if(prefs.getBoolean("ison",true)){
+            intent.setAction(ReminderTasks.ACTION_TURTLE);
+            startService(intent);
+        }else{
+            stopService(intent);
+            NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.cancel(TRTL_MINING_REMINDER_ID);
+        }
+    }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if(key.equals("ison")){
+            boolean isOn = sharedPreferences.getBoolean("ison",true);
+            Intent intent = new Intent(ParentActivity.this, TRTLService.class);
+            if(isOn){
+                intent.setAction(ReminderTasks.ACTION_TURTLE);
+                startService(intent);
+            }else{
+                stopService(intent);
+                NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                manager.cancel(TRTL_MINING_REMINDER_ID);
+            }
+        }
     }
 
     private class SectionPagerAdapter extends FragmentPagerAdapter {
@@ -153,9 +198,16 @@ public class ParentActivity extends AppCompatActivity {
                         setAPIObjectsWallet(response);
                         addressCall = true;
                         if (statsCall == true) {
-                            inflateTabs();
-                            statsCall = false;
-                            addressCall = false;
+
+                            if (null == statObj) {
+                                Snackbar.make(view, "Wallet not found",Snackbar.LENGTH_INDEFINITE).show();
+                            }
+                            else {
+                                inflateTabs();
+                                statsCall = false;
+                                addressCall = false;
+                                setUpSharedPrefs();
+                            }
                         }
                     }
 
@@ -178,9 +230,15 @@ public class ParentActivity extends AppCompatActivity {
 
                         statsCall = true;
                         if (addressCall == true) {
-                            inflateTabs();
-                            statsCall = false;
-                            addressCall = false;
+                            if (null == statObj) {
+                                Snackbar.make(view, "Wallet not found",Snackbar.LENGTH_INDEFINITE).show();
+                            }
+                            else {
+                                inflateTabs();
+                                statsCall = false;
+                                addressCall = false;
+                                setUpSharedPrefs();
+                            }
                         }
 
                     }
@@ -211,21 +269,14 @@ public class ParentActivity extends AppCompatActivity {
         svgView.setVisibility(View.GONE);
         mSectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         mViewPager = findViewById(R.id.container);
-        toolbar = findViewById(R.id.toolbar);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Pool Monitor");
 
         mViewPager.setAdapter(mSectionPagerAdapter);
         TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout.setVisibility(View.VISIBLE);
         tabLayout.setupWithViewPager(mViewPager);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_parent,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

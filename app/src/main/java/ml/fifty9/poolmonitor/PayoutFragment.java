@@ -60,7 +60,7 @@ public class PayoutFragment extends Fragment {
         Pool pool = ((ParentActivity)this.getActivity()).getPool();
         payments = pool.getPayments();
 
-        if(payments.size() == 0){
+        if(payments.size() == 0 || null == payments){
             recyclerView.setVisibility(View.GONE);
             Snackbar.make(this.view, "Payouts Empty",Snackbar.LENGTH_INDEFINITE).show();
 //            paymentText.setVisibility(View.VISIBLE);
