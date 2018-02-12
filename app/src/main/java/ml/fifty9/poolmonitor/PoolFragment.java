@@ -47,7 +47,7 @@ public class PoolFragment extends Fragment {
     Config config;
     Pool pool;
     TextView poolFeeText, paymentThresholdText, minersText, poolHashRateText, minersPaidText, totalPaymentsText, difficultyText, rewardText, updateTimeText, heightText, poolNameText;
-    List<List<Integer>> hashes;
+    List<List<Long>> hashes;
     LineChart hashChart;
     private SharedPreferences poolPreferences;
 
@@ -122,12 +122,12 @@ public class PoolFragment extends Fragment {
     }
 
 
-    public String convertCoin(int coins) {
+    public String convertCoin(Long coins) {
         coins = coins/100;
         return String.valueOf(coins) + " TRTL";
     }
 
-    public String by100 (int coin) {
+    public String by100 (Long coin) {
         return String.valueOf(coin/100);
     }
 
@@ -164,7 +164,7 @@ public class PoolFragment extends Fragment {
 
         else {
 
-            List<Integer> hashList = new ArrayList<Integer>();
+            List<Long> hashList = new ArrayList<Long>();
 
             List<Entry> entries = new ArrayList<Entry>();
 

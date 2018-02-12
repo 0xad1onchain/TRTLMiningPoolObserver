@@ -12,25 +12,25 @@ import java.util.List;
 public class Charts {
     @SerializedName("payments")
     @Expose
-    private List<List<Integer>> payments = null;
+    private List<List<Long>> payments = null;
 
     @SerializedName("hashrate")
     @Expose
-    private List<List<Integer>> hashrate = null;
+    private List<List<Long>> hashrate = null;
 
-    public List<List<Integer>> getPayments() {
+    public List<List<Long>> getPayments() {
         return payments;
     }
 
-    public void setPayments(List<List<Integer>> payments) {
+    public void setPayments(List<List<Long>> payments) {
         this.payments = payments;
     }
 
-    public List<List<Integer>> getHashrate() {
+    public List<List<Long>> getHashrate() {
         return hashrate;
     }
 
-    public void setHashrate(List<List<Integer>> hashrate) {
+    public void setHashrate(List<List<Long>> hashrate) {
         this.hashrate = hashrate;
     }
 }

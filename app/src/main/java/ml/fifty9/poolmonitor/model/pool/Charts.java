@@ -13,35 +13,35 @@ public class Charts {
 
     @SerializedName("hashrate")
     @Expose
-    private List<List<Integer>> hashrate = null;
+    private List<List<Long>> hashrate = null;
     @SerializedName("workers")
     @Expose
-    private List<List<Integer>> workers = null;
+    private List<List<Long>> workers = null;
     @SerializedName("difficulty")
     @Expose
-    private List<List<Integer>> difficulty = null;
+    private List<List<Long>> difficulty = null;
 
-    public List<List<Integer>> getHashrate() {
+    public List<List<Long>> getHashrate() {
         return hashrate;
     }
 
-    public void setHashrate(List<List<Integer>> hashrate) {
+    public void setHashrate(List<List<Long>> hashrate) {
         this.hashrate = hashrate;
     }
 
-    public List<List<Integer>> getWorkers() {
+    public List<List<Long>> getWorkers() {
         return workers;
     }
 
-    public void setWorkers(List<List<Integer>> workers) {
+    public void setWorkers(List<List<Long>> workers) {
         this.workers = workers;
     }
 
-    public List<List<Integer>> getDifficulty() {
+    public List<List<Long>> getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(List<List<Integer>> difficulty) {
+    public void setDifficulty(List<List<Long>> difficulty) {
         this.difficulty = difficulty;
     }
 }

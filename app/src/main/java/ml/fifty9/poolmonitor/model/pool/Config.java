@@ -17,7 +17,7 @@ public class Config {
 
     @SerializedName("hashrateWindow")
     @Expose
-    private Integer hashrateWindow;
+    private Long hashrateWindow;
 
     @SerializedName("fee")
     @Expose
@@ -29,11 +29,11 @@ public class Config {
 
     @SerializedName("coinUnits")
     @Expose
-    private Integer coinUnits;
+    private Long coinUnits;
 
     @SerializedName("coinDifficultyTarget")
     @Expose
-    private Integer coinDifficultyTarget;
+    private Long coinDifficultyTarget;
 
     @SerializedName("symbol")
     @Expose
@@ -41,7 +41,7 @@ public class Config {
 
     @SerializedName("depth")
     @Expose
-    private Integer depth;
+    private Long depth;
 
     @SerializedName("donation")
     @Expose
@@ -53,15 +53,15 @@ public class Config {
 
     @SerializedName("minPaymentThreshold")
     @Expose
-    private Integer minPaymentThreshold;
+    private Long minPaymentThreshold;
 
     @SerializedName("denominationUnit")
     @Expose
-    private Integer denominationUnit;
+    private Long denominationUnit;
 
     @SerializedName("blockTime")
     @Expose
-    private Integer blockTime;
+    private Long blockTime;
 
     @SerializedName("slushMiningEnabled")
     @Expose
@@ -69,7 +69,7 @@ public class Config {
 
     @SerializedName("weight")
     @Expose
-    private Integer weight;
+    private Long weight;
 
     public List<Port> getPorts() {
         return ports;
@@ -79,11 +79,11 @@ public class Config {
         this.ports = ports;
     }
 
-    public Integer getHashrateWindow() {
+    public Long getHashrateWindow() {
         return hashrateWindow;
     }
 
-    public void setHashrateWindow(Integer hashrateWindow) {
+    public void setHashrateWindow(Long hashrateWindow) {
         this.hashrateWindow = hashrateWindow;
     }
 
@@ -103,19 +103,19 @@ public class Config {
         this.coin = coin;
     }
 
-    public Integer getCoinUnits() {
+    public Long getCoinUnits() {
         return coinUnits;
     }
 
-    public void setCoinUnits(Integer coinUnits) {
+    public void setCoinUnits(Long coinUnits) {
         this.coinUnits = coinUnits;
     }
 
-    public Integer getCoinDifficultyTarget() {
+    public Long getCoinDifficultyTarget() {
         return coinDifficultyTarget;
     }
 
-    public void setCoinDifficultyTarget(Integer coinDifficultyTarget) {
+    public void setCoinDifficultyTarget(Long coinDifficultyTarget) {
         this.coinDifficultyTarget = coinDifficultyTarget;
     }
 
@@ -127,11 +127,11 @@ public class Config {
         this.symbol = symbol;
     }
 
-    public Integer getDepth() {
+    public Long getDepth() {
         return depth;
     }
 
-    public void setDepth(Integer depth) {
+    public void setDepth(Long depth) {
         this.depth = depth;
     }
 
@@ -151,27 +151,27 @@ public class Config {
         this.version = version;
     }
 
-    public Integer getMinPaymentThreshold() {
+    public Long getMinPaymentThreshold() {
         return minPaymentThreshold;
     }
 
-    public void setMinPaymentThreshold(Integer minPaymentThreshold) {
+    public void setMinPaymentThreshold(Long minPaymentThreshold) {
         this.minPaymentThreshold = minPaymentThreshold;
     }
 
-    public Integer getDenominationUnit() {
+    public Long getDenominationUnit() {
         return denominationUnit;
     }
 
-    public void setDenominationUnit(Integer denominationUnit) {
+    public void setDenominationUnit(Long denominationUnit) {
         this.denominationUnit = denominationUnit;
     }
 
-    public Integer getBlockTime() {
+    public Long getBlockTime() {
         return blockTime;
     }
 
-    public void setBlockTime(Integer blockTime) {
+    public void setBlockTime(Long blockTime) {
         this.blockTime = blockTime;
     }
 
@@ -183,11 +183,11 @@ public class Config {
         this.slushMiningEnabled = slushMiningEnabled;
     }
 
-    public Integer getWeight() {
+    public Long getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(Long weight) {
         this.weight = weight;
     }
 }

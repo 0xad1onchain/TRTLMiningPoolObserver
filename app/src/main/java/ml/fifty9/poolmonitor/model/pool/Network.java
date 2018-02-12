@@ -10,49 +10,49 @@ import com.google.gson.annotations.SerializedName;
 public class Network {
     @SerializedName("difficulty")
     @Expose
-    private Integer difficulty;
+    private Long difficulty;
     @SerializedName("height")
     @Expose
-    private Integer height;
+    private Long height;
     @SerializedName("timestamp")
     @Expose
-    private Integer timestamp;
+    private Long timestamp;
     @SerializedName("reward")
     @Expose
-    private Integer reward;
+    private Long reward;
     @SerializedName("hash")
     @Expose
     private String hash;
 
-    public Integer getDifficulty() {
+    public Long getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Integer difficulty) {
+    public void setDifficulty(Long difficulty) {
         this.difficulty = difficulty;
     }
 
-    public Integer getHeight() {
+    public Long getHeight() {
         return height;
     }
 
-    public void setHeight(Integer height) {
+    public void setHeight(Long height) {
         this.height = height;
     }
 
-    public Integer getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Integer timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 
-    public Integer getReward() {
+    public Long getReward() {
         return reward;
     }
 
-    public void setReward(Integer reward) {
+    public void setReward(Long reward) {
         this.reward = reward;
     }
 

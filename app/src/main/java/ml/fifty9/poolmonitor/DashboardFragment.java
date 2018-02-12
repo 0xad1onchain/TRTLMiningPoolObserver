@@ -47,7 +47,7 @@ public class DashboardFragment extends Fragment {
     private TextView hashRate, lastShare, paid, balance, submittedHashes, walletText;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     LineChart hashChart;
-    List<List<Integer>> hashes;
+    List<List<Long>> hashes;
     Charts chart;
     Stats stats;
     private SharedPreferences walletPref;
@@ -123,11 +123,11 @@ public class DashboardFragment extends Fragment {
 
     public String getHashRate() {
 
-        int totalTime = 0;
-        int totalHashes = 0;
+        long totalTime = 0;
+        long totalHashes = 0;
 
         for (int i = 0; i < hashes.size(); i++) {
-            List<Integer> entry = hashes.get(i);
+            List<Long> entry = hashes.get(i);
             totalHashes = totalHashes + entry.get(1) * entry.get(2);
             totalTime = totalTime + entry.get(2);
         }
@@ -213,7 +213,7 @@ public class DashboardFragment extends Fragment {
 
         else {
 
-            List<Integer> hashList = new ArrayList<Integer>();
+            List<Long> hashList = new ArrayList<Long>();
 
             List<Entry> entries = new ArrayList<Entry>();
 

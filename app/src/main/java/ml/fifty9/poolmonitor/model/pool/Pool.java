@@ -19,25 +19,25 @@ public class Pool {
         private List<String> blocks = null;
         @SerializedName("totalBlocks")
         @Expose
-        private Integer totalBlocks;
+        private Long totalBlocks;
         @SerializedName("payments")
         @Expose
         private List<String> payments = null;
         @SerializedName("totalPayments")
         @Expose
-        private Integer totalPayments;
+        private Long totalPayments;
         @SerializedName("totalMinersPaid")
         @Expose
-        private Integer totalMinersPaid;
+        private Long totalMinersPaid;
         @SerializedName("miners")
         @Expose
-        private Integer miners;
+        private Long miners;
         @SerializedName("hashrate")
         @Expose
-        private Integer hashrate;
+        private Long hashrate;
         @SerializedName("roundHashes")
         @Expose
-        private Integer roundHashes;
+        private Long roundHashes;
         @SerializedName("lastBlockFound")
         @Expose
         private String lastBlockFound;
@@ -58,11 +58,11 @@ public class Pool {
             this.blocks = blocks;
         }
 
-        public Integer getTotalBlocks() {
+        public Long getTotalBlocks() {
             return totalBlocks;
         }
 
-        public void setTotalBlocks(Integer totalBlocks) {
+        public void setTotalBlocks(Long totalBlocks) {
             this.totalBlocks = totalBlocks;
         }
 
@@ -74,43 +74,43 @@ public class Pool {
             this.payments = payments;
         }
 
-        public Integer getTotalPayments() {
+        public Long getTotalPayments() {
             return totalPayments;
         }
 
-        public void setTotalPayments(Integer totalPayments) {
+        public void setTotalPayments(Long totalPayments) {
             this.totalPayments = totalPayments;
         }
 
-        public Integer getTotalMinersPaid() {
+        public Long getTotalMinersPaid() {
             return totalMinersPaid;
         }
 
-        public void setTotalMinersPaid(Integer totalMinersPaid) {
+        public void setTotalMinersPaid(Long totalMinersPaid) {
             this.totalMinersPaid = totalMinersPaid;
         }
 
-        public Integer getMiners() {
+        public Long getMiners() {
             return miners;
         }
 
-        public void setMiners(Integer miners) {
+        public void setMiners(Long miners) {
             this.miners = miners;
         }
 
-        public Integer getHashrate() {
+        public Long getHashrate() {
             return hashrate;
         }
 
-        public void setHashrate(Integer hashrate) {
+        public void setHashrate(Long hashrate) {
             this.hashrate = hashrate;
         }
 
-        public Integer getRoundHashes() {
+        public Long getRoundHashes() {
             return roundHashes;
         }
 
-        public void setRoundHashes(Integer roundHashes) {
+        public void setRoundHashes(Long roundHashes) {
             this.roundHashes = roundHashes;
         }
 
