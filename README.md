@@ -14,22 +14,22 @@ Features:
 ## List of Pools supported
 Currently our app supports the following pools:
 
-* [Z-Pool](http://z-pool.com/)
+* [Z-Pool.com](http://z-pool.com/)
 * [SlowandSteady.fun](http://slowandsteady.fun/)
-* [eu.turtlepool.space](http://eu.turtlepool.space/)
+* [Eu.turtlepool.space](http://eu.turtlepool.space/)
 * [Hk.turtlepool.space](http://hk.turtlepool.space/)
 * [Us.turtlepool.space](http://us.turtlepool.space/)
 * [Ny.minetrtl.us](http://ny.minetrtl.us/)
 * [Trtl.radicaldelta.org](http://trtl.radicaldelta.org/)
-* [auspool.turtleco.in](http://auspool.turtleco.in/)
-* [xk.is](http://xk.is/)
-* [turtlecoinpool.ddns.net](http://turtlecoinpool.ddns.net/)
-* [pool.turtleco.in](http://pool.turtleco.in/)
-* [trtlpool.ninja](http://trtlpool.ninja/)
-* [pool.trtl.me](http://pool.trtl.me/)
-* [crytoknight.cc](http://cryptoknight.cc/)
-* [trtl.ninja](http://trtl.ninja/)
-* [atpool.party](http://atpool.party/)
+* [Auspool.turtleco.in](http://auspool.turtleco.in/)
+* [Xk.is](http://xk.is/)
+* [Turtlecoinpool.ddns.net](http://turtlecoinpool.ddns.net/)
+* [Pool.turtleco.in](http://pool.turtleco.in/)
+* [Trtlpool.ninja](http://trtlpool.ninja/)
+* [Pool.trtl.me](http://pool.trtl.me/)
+* [Crytoknight.cc](http://cryptoknight.cc/)
+* [Trtl.ninja](http://trtl.ninja/)
+* [Atpool.party](http://atpool.party/)
 
 ## Contributing
 
@@ -45,9 +45,11 @@ Please read [CONTRIBUTING.md](https://github.com/adigupta13/TRTLMiningPoolObserv
 We accept TurtleCoin donations. This will help us to make the app more flexible and more dynamic. Our TurtleCoin Addresses are:
 
 Aditya 
+<br>
 `TRTLux32vos9TtGNRQTux4WLFQTBX2ii3RMzGsrbN2dKatwucquqQRmUUzXkuiNyEA5NCqPUiP3SeSeJVT9bpW3SGyWKmRcoT3Z`
 <br>
 Hemant
+<br>
 `TRTLv41iNdPeTTj4h8CDniJHyHbGuCZcZZXRpTNLY61mPfGogXdptLiaLnur3Wkrpa5kc3KGmwtnu83HY27xhtcrQe9TgrfCjks`
 
 ## License
