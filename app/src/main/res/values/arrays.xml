@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="categories">
-        <item>Z-pool.com</item>
-        <item>Slowandsteady.fun</item>
-        <item>Eu.turtlepool.space</item>
-        <item>Hk.turtlepool.space</item>
-        <item>Us.turtlepool.space</item>
-        <item>Ny.minetrtl.us</item>
-        <item>Trtl.radicaldelta.org</item>
-        <item>Auspool.turtleco.in</item>
-        <item>Xk.is</item>
-        <item>Turtlecoinpool.Ddns.Net</item>
-        <item>Pool.Turtleco.In</item>
-        <item>Trtlpool.Ninja</item>
-        <item>Pool.Trtl.Me</item>
-        <item>Cryptoknight.cc</item>
-        <item>Trtl.Ninja</item>
-        <item>Atpool</item>
+            <item>Z-pool.com</item>
+            <item>Slowandsteady.fun</item>
+            <item>Eu.turtlepool.space</item>
+            <item>Hk.turtlepool.space</item>
+            <item>Us.turtlepool.space</item>
+            <item>Ny.minetrtl.us</item>
+            <item>Trtl.radicaldelta.org</item>
+            <item>Auspool.turtleco.in</item>
+            <item>Xk.is</item>
+            <item>Turtlecoinpool.Ddns.Net</item>
+            <item>Pool.Turtleco.In</item>
+            <item>Trtlpool.Ninja</item>
+            <item>Pool.Trtl.Me</item>
+            <item>Cryptoknight.cc</item>
+            <item>Trtl.Ninja</item>
+            <item>Atpool</item>
     </string-array>
 
     <string-array name="urls">
