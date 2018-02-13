@@ -36,4 +36,4 @@ This project is licensed under the GNU LGPL - see the [LICENSE.md](https://githu
 ## Acknowledgments
 
 * Turtle Coin Developers 
-* All the API pool providers
+* Cryptonote for developing the pools
