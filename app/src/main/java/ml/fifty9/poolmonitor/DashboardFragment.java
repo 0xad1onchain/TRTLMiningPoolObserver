@@ -197,11 +197,10 @@ public class DashboardFragment extends Fragment {
         else
             lastShare.setText(getDate(stats.getLastShare()));
 
-        String hashRateString = getHashRate();
-        if (null == hashRateString)
-            hashRate.setText(R.string.null_value_string);
+        if (null == stats.getHashrate())
+            hashRate.setText("0 H/s");
         else
-            hashRate.setText(getHashRate());
+            hashRate.setText(stats.getHashrate()+"/sec");
 
     }
 
@@ -218,9 +217,7 @@ public class DashboardFragment extends Fragment {
             List<Entry> entries = new ArrayList<Entry>();
 
             for (int i = 0; i < hashes.size(); i++) {
-                for (int j = 0; j < hashes.get(i).get(2); j++) {
                     hashList.add(hashes.get(i).get(1));
-                }
             }
 
             for (int i = 0; i< hashList.size(); i++) {
@@ -235,7 +232,6 @@ public class DashboardFragment extends Fragment {
             dataSet.setDrawFilled(true);
             dataSet.setFillAlpha(255);
             dataSet.setValueTextColor(Color.BLACK);
-            dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             dataSet.setDrawValues(false);
             dataSet.setDrawCircles(false);
             dataSet.setCircleRadius(0);
@@ -248,9 +244,6 @@ public class DashboardFragment extends Fragment {
             legend.setEnabled(false);
 
             YAxis leftAxis = hashChart.getAxisLeft();
-//            leftAxis.setDrawLabels(false); // no axis labels
-//            leftAxis.setDrawAxisLine(false); // no axis line
-//            leftAxis.setDrawGridLines(false); // no grid lines
             leftAxis.disableAxisLineDashedLine();
             leftAxis.removeAllLimitLines();
             leftAxis.disableGridDashedLine();

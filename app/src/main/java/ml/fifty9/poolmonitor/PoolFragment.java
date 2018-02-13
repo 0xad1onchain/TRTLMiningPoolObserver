@@ -169,9 +169,7 @@ public class PoolFragment extends Fragment {
             List<Entry> entries = new ArrayList<Entry>();
 
             for (int i = 0; i < hashes.size(); i++) {
-                for (int j = 0; j < hashes.get(i).get(2); j++) {
-                    hashList.add(hashes.get(i).get(1));
-                }
+                hashList.add(hashes.get(i).get(1));
             }
 
             for (int i = 0; i< hashList.size(); i++) {
@@ -186,7 +184,6 @@ public class PoolFragment extends Fragment {
             dataSet.setDrawFilled(true);
             dataSet.setFillAlpha(255);
             dataSet.setValueTextColor(Color.BLACK);
-            dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             dataSet.setDrawValues(false);
             dataSet.setDrawCircles(false);
             dataSet.setCircleRadius(0);
@@ -199,9 +196,6 @@ public class PoolFragment extends Fragment {
             legend.setEnabled(false);
 
             YAxis leftAxis = hashChart.getAxisLeft();
-//            leftAxis.setDrawLabels(false); // no axis labels
-//            leftAxis.setDrawAxisLine(false); // no axis line
-//            leftAxis.setDrawGridLines(false); // no grid lines
             leftAxis.disableAxisLineDashedLine();
             leftAxis.removeAllLimitLines();
             leftAxis.disableGridDashedLine();

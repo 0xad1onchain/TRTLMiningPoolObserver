@@ -24,6 +24,9 @@ public class Stats {
     @SerializedName("paid")
     @Expose
     private String paid;
+    @SerializedName("hashrate")
+    @Expose
+    private String hashrate;
 
     public String getHashes() {
         return hashes;
@@ -55,6 +58,13 @@ public class Stats {
 
     public void setPaid(String paid) {
         this.paid = paid;
+    }
+    public String getHashrate() {
+        return hashrate;
+    }
+
+    public void setHashrate(String hashrate) {
+        this.hashrate = hashrate;
     }
 
 }
