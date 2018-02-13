@@ -1,4 +1,5 @@
 # Pool Monitor
+[![Build Status](https://travis-ci.org/adigupta13/TRTLMiningPoolObserver.svg?branch=master)](https://travis-ci.org/adigupta13/TRTLMiningPoolObserver)
 
 An android application to monitor mining stats for all major Turtle Coin mining pools running cryptonote
 
