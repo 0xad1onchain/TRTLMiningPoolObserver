@@ -11,6 +11,25 @@ Features:
 * Safe. All API's used are safe and verified by multiple developers and miners.
 * Open Source. Pool Monitor is Free and Open Source, enabling anyone to verify its security by auditing the code.
 
+## List of Pools supported
+Currently our app supports the following pools:
+
+* [Z-Pool](http://z-pool.com/)
+* [SlowandSteady.fun](http://slowandsteady.fun/)
+* [eu.turtlepool.space](http://eu.turtlepool.space/)
+* [Hk.turtlepool.space](http://hk.turtlepool.space/)
+* [Us.turtlepool.space](http://us.turtlepool.space/)
+* [Ny.minetrtl.us](http://ny.minetrtl.us/)
+* [Trtl.radicaldelta.org](http://trtl.radicaldelta.org/)
+* [auspool.turtleco.in](http://auspool.turtleco.in/)
+* [xk.is](http://xk.is/)
+* [turtlecoinpool.ddns.net](http://turtlecoinpool.ddns.net/)
+* [pool.turtleco.in](http://pool.turtleco.in/)
+* [trtlpool.ninja](http://trtlpool.ninja/)
+* [pool.trtl.me](http://pool.trtl.me/)
+* [crytoknight.cc](http://cryptoknight.cc/)
+* [trtl.ninja](http://trtl.ninja/)
+* [atpool.party](http://atpool.party/)
 
 ## Contributing
 
@@ -30,8 +49,6 @@ Aditya
 <br>
 Hemant
 `TRTLv41iNdPeTTj4h8CDniJHyHbGuCZcZZXRpTNLY61mPfGogXdptLiaLnur3Wkrpa5kc3KGmwtnu83HY27xhtcrQe9TgrfCjks`
-
-
 
 ## License
 
