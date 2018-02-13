@@ -1,8 +1,8 @@
 # Pool Monitor
 
-Pool Monitor is an Android application aimed at turtle coin miners to get on the go information about mining.
+An android application to monitor mining stats for all major Turtle Coin mining pools running cryptonote
 
-Using Pool Monitor you can get all the details regarding your cryptocurrency mining like hashrate, payments and more.
+Using Pool Monitor you can get all the details regarding your turtle coin mining like hashrate, payments and more.
 
 Features:
 * Easy. Just add your wallet address and Voilà. You have all the details you require.
