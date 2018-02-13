@@ -25,9 +25,12 @@ Please read [CONTRIBUTING.md](https://github.com/adigupta13/TRTLMiningPoolObserv
 
 We accept TurtleCoin donations. This will help us to make the app more flexible and more dynamic. Our TurtleCoin Addresses are:
 
-`TRTLv41iNdPeTTj4h8CDniJHyHbGuCZcZZXRpTNLY61mPfGogXdptLiaLnur3Wkrpa5kc3KGmwtnu83HY27xhtcrQe9TgrfCjks`
-<br>
+Aditya 
 `TRTLux32vos9TtGNRQTux4WLFQTBX2ii3RMzGsrbN2dKatwucquqQRmUUzXkuiNyEA5NCqPUiP3SeSeJVT9bpW3SGyWKmRcoT3Z`
+<br>
+Hemant
+`TRTLv41iNdPeTTj4h8CDniJHyHbGuCZcZZXRpTNLY61mPfGogXdptLiaLnur3Wkrpa5kc3KGmwtnu83HY27xhtcrQe9TgrfCjks`
+
 
 
 ## License
