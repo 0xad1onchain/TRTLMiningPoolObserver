@@ -71,6 +71,7 @@ public class ParentActivity extends AppCompatActivity{
     private DashboardFragment dashboardFragment = new DashboardFragment();
     private PoolFragment poolFragment = new PoolFragment();
     private PayoutFragment payoutFragment = new PayoutFragment();
+    SharedPreferences.OnSharedPreferenceChangeListener poolChangeListener, notifListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +112,7 @@ public class ParentActivity extends AppCompatActivity{
         }
 
 
-        SharedPreferences.OnSharedPreferenceChangeListener notifListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        notifListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 
 
@@ -136,7 +137,7 @@ public class ParentActivity extends AppCompatActivity{
 
 
 
-        SharedPreferences.OnSharedPreferenceChangeListener poolChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        poolChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 
                 Boolean firstTime = prefs.getBoolean("first", true);
@@ -159,6 +160,41 @@ public class ParentActivity extends AppCompatActivity{
         notifPref.registerOnSharedPreferenceChangeListener(notifListener);
         poolPref.registerOnSharedPreferenceChangeListener(poolChangeListener);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(walletText.isEmpty() || pool.isEmpty()){
+            Intent walletIntent = new Intent(this, WalletActivity.class);
+            startActivityForResult(walletIntent, 1);
+
+        }
+        else {
+            ReminderUtility.scheduleReminder(this);
+            retrofitAPI = RetrofitService.getAPI(pool);
+            callAPI();
+        }
+        notifPref.registerOnSharedPreferenceChangeListener(notifListener);
+        poolPref.registerOnSharedPreferenceChangeListener(poolChangeListener);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(walletText.isEmpty() || pool.isEmpty()){
+            Intent walletIntent = new Intent(this, WalletActivity.class);
+            startActivityForResult(walletIntent, 1);
+
+        }
+        else {
+            ReminderUtility.scheduleReminder(this);
+            retrofitAPI = RetrofitService.getAPI(pool);
+            callAPI();
+        }
+        notifPref.registerOnSharedPreferenceChangeListener(notifListener);
+        poolPref.registerOnSharedPreferenceChangeListener(poolChangeListener);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
