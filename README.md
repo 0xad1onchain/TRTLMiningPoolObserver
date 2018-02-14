@@ -1,5 +1,4 @@
-# Pool Monitor
-[![Build Status](https://travis-ci.org/adigupta13/TRTLMiningPoolObserver.svg?branch=master)](https://travis-ci.org/adigupta13/TRTLMiningPoolObserver)
+# Pool Monitor [![Build Status](https://travis-ci.org/adigupta13/TRTLMiningPoolObserver.svg?branch=master)](https://travis-ci.org/adigupta13/TRTLMiningPoolObserver)
 
 An android application to monitor mining stats for all major Turtle Coin mining pools running cryptonote
 
@@ -33,7 +32,7 @@ Currently our app supports the following pools:
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/adigupta13/TRTLMiningPoolObserver/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING](https://github.com/adigupta13/TRTLMiningPoolObserver/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Authors
 
@@ -54,7 +53,7 @@ Hemant
 
 ## License
 
-This project is licensed under the GNU LGPL - see the [LICENSE.md](https://github.com/adigupta13/TRTLMiningPoolObserver/blob/master/LICENSE.md) file for details
+This project is licensed under the GNU LGPL - see the [LICENSE](https://github.com/adigupta13/TRTLMiningPoolObserver/blob/master/LICENSE.md) file for details
 
 ## Acknowledgments
 
