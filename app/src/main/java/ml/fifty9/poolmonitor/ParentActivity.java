@@ -232,11 +232,11 @@ public class ParentActivity extends AppCompatActivity{
 
             switch (position) {
                 case 0:
-                    return dashboardFragment;
+                    return new DashboardFragment();
                 case 1:
-                    return poolFragment;
+                    return new PoolFragment();
                 case 2:
-                    return payoutFragment;
+                    return new PayoutFragment();
             }
             return null;
         }
@@ -347,6 +347,7 @@ public class ParentActivity extends AppCompatActivity{
     private void inflateTabs() {
         svgView.setVisibility(View.GONE);
         mViewPager = findViewById(R.id.container);
+        mSectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionPagerAdapter);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setVisibility(View.VISIBLE);
