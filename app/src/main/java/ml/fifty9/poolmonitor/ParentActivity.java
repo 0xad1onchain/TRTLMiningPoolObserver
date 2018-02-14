@@ -1,5 +1,6 @@
 package ml.fifty9.poolmonitor;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -40,12 +41,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ParentActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class ParentActivity extends AppCompatActivity{
     private SectionPagerAdapter mSectionPagerAdapter;
     private ViewPager mViewPager;
     private Toolbar toolbar;
     private AnimatedSvgView svgView;
-    private SharedPreferences sharedPreferences, walletPref;
+    private SharedPreferences poolPref, walletPref, notifPref;
     private String pool,walletText;
     private RetrofitAPI retrofitAPI;
     private View view;
@@ -63,14 +64,27 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
     private boolean statsCall = false;
     private boolean notificationCallOK = false;
     static final int SETTINGS = 13;
+    private NotificationManager manager;
+    private Snackbar connectionErrorSnackbar, noWalletSnackbar;
+    private Intent notifIntent;
+
+    private DashboardFragment dashboardFragment = new DashboardFragment();
+    private PoolFragment poolFragment = new PoolFragment();
+    private PayoutFragment payoutFragment = new PayoutFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        notifPref = this.getSharedPreferences("NOTIFS", 0);
+        notifIntent = new Intent(ParentActivity.this, TRTLService.class);
+        manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         setContentView(R.layout.activity_parent);
-
+        mSectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         svgView = findViewById(R.id.animated_svg_view);
         view = findViewById(R.id.main_content);
+
+        connectionErrorSnackbar = Snackbar.make(view, "Error in Connection",Snackbar.LENGTH_INDEFINITE);
+        noWalletSnackbar = Snackbar.make(view, "Wallet not found",Snackbar.LENGTH_INDEFINITE);
         svgView.start();
 
         toolbar = findViewById(R.id.toolbar);
@@ -78,23 +92,93 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Pool Monitor");
 
-        sharedPreferences = this.getSharedPreferences("URL_PREFS", 0);
+
+
+        poolPref = this.getSharedPreferences("URL_PREFS", 0);
         walletPref = this.getSharedPreferences("WALLET_PREFS",0);
 
-        walletText = walletPref.getString("wallet","");
-        pool = sharedPreferences.getString("url","");
+        updateUserInfo();
+
         if(walletText.isEmpty() || pool.isEmpty()){
-            startActivity(new Intent(ParentActivity.this, WalletActivity.class));
-        }else{
+            Intent walletIntent = new Intent(this, WalletActivity.class);
+            startActivityForResult(walletIntent, 1);
+
+        }
+        else {
             ReminderUtility.scheduleReminder(this);
             retrofitAPI = RetrofitService.getAPI(pool);
             callAPI();
         }
+
+
+        SharedPreferences.OnSharedPreferenceChangeListener notifListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+
+
+
+                if (key.equals("ison")) {
+                    boolean isOn = prefs.getBoolean("ison", false);
+
+                    if (isOn) {
+                        if (notificationCallOK) {
+                            notifIntent.setAction(ReminderTasks.ACTION_TURTLE);
+                            startService(notifIntent);
+                        }
+                    }
+                    else {
+                        stopService(notifIntent);
+                        manager.cancelAll();
+                    }
+                }
+//                setUpSharedPrefs(prefs);
+            }
+        };
+
+
+
+        SharedPreferences.OnSharedPreferenceChangeListener poolChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+
+                Boolean firstTime = prefs.getBoolean("first", true);
+                if (!firstTime) {
+                    if (key.equals("url")) {
+                        String pool = prefs.getString("url", "null");
+                        updateUserInfo();
+                        retrofitAPI = RetrofitService.getAPI(pool);
+                        callAPI();
+                    }
+                }
+                else {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("first", false);
+                    editor.apply();
+                }
+            }
+        };
+
+        notifPref.registerOnSharedPreferenceChangeListener(notifListener);
+        poolPref.registerOnSharedPreferenceChangeListener(poolChangeListener);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_CANCELED) {
+                updateUserInfo();
+                retrofitAPI = RetrofitService.getAPI(pool);
+                callAPI();
+            }
+        }
+    }
+
+    public void updateUserInfo() {
+        walletText = walletPref.getString("wallet","");
+        pool = poolPref.getString("url","");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d("Menu", "Function Started");
         getMenuInflater().inflate(R.menu.menu_parent,menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -123,39 +207,18 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
 
     public ml.fifty9.poolmonitor.model.pool.Pool getPoolPOJO() { return this.poolPOJO; }
 
-    public void setUpSharedPrefs(){
 
-        if (notificationCallOK) {
-            SharedPreferences prefs = this.getSharedPreferences("NOTIFS", 0);
-            Intent intent = new Intent(ParentActivity.this, TRTLService.class);
-            if (prefs.getBoolean("ison", true)) {
-                intent.setAction(ReminderTasks.ACTION_TURTLE);
-                startService(intent);
-            } else {
-                stopService(intent);
-                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                manager.cancel(TRTL_MINING_REMINDER_ID);
+    public void setUpSharedPrefs(SharedPreferences preference){
+        if (preference.getBoolean("ison", false)) {
+            if (notificationCallOK) {
+                notifIntent.setAction(ReminderTasks.ACTION_TURTLE);
+                startService(notifIntent);
             }
+        } else {
+            stopService(notifIntent);
+            manager.cancelAll();
         }
-    }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-        if (notificationCallOK) {
-            if (key.equals("ison")) {
-                boolean isOn = sharedPreferences.getBoolean("ison", true);
-                Intent intent = new Intent(ParentActivity.this, TRTLService.class);
-                if (isOn) {
-                    intent.setAction(ReminderTasks.ACTION_TURTLE);
-                    startService(intent);
-                } else {
-                    stopService(intent);
-                    NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    manager.cancel(TRTL_MINING_REMINDER_ID);
-                }
-            }
-        }
     }
 
     private class SectionPagerAdapter extends FragmentPagerAdapter {
@@ -169,11 +232,11 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
 
             switch (position) {
                 case 0:
-                    return new DashboardFragment();
+                    return dashboardFragment;
                 case 1:
-                    return new PoolFragment();
+                    return poolFragment;
                 case 2:
-                    return new PayoutFragment();
+                    return payoutFragment;
             }
             return null;
         }
@@ -191,7 +254,7 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
                 case 1:
                     return "Pool";
                 case 2:
-                    return "Payout";
+                    return "Payouts";
             }
             return null;
         }
@@ -208,15 +271,17 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
                         if (statsCall == true) {
 
                             if (null == statObj) {
-                                Snackbar.make(view, "Wallet not found",Snackbar.LENGTH_INDEFINITE).show();
+                                noWalletSnackbar.show();
                                 notificationCallOK = false;
                             }
                             else {
+                                noWalletSnackbar.dismiss();
+                                connectionErrorSnackbar.dismiss();
                                 inflateTabs();
                                 statsCall = false;
                                 addressCall = false;
                                 notificationCallOK = true;
-                                setUpSharedPrefs();
+                                setUpSharedPrefs(notifPref);
                             }
                         }
                     }
@@ -224,8 +289,7 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
                     @Override
                     public void onFailure(Call<Pool> call, Throwable t) {
                         svgView.setVisibility(View.GONE);
-                        Snackbar.make(view, "Error in Connection",Snackbar.LENGTH_INDEFINITE).show();
-                        Log.d("Error",t.getMessage());
+                        connectionErrorSnackbar.show();
 
 
                     }
@@ -235,24 +299,24 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
                 .enqueue(new Callback<StatExample>() {
                     @Override
                     public void onResponse(Call<StatExample> call, Response<StatExample> response) {
-                        Log.d("Stats", response.body().getConfig().
-                                getPorts().get(0).getDifficulty().toString());
+
                         setAPIObjectsStats(response);
-                        Log.d("LOOG", configPOJO.getCoin());
 
                         statsCall = true;
                         if (addressCall == true) {
                             if (null == statObj) {
-                                Snackbar.make(view, "Wallet not found",Snackbar.LENGTH_INDEFINITE).show();
+                                noWalletSnackbar.show();
                                 notificationCallOK = false;
 
                             }
                             else {
+                                noWalletSnackbar.dismiss();
+                                connectionErrorSnackbar.dismiss();
                                 inflateTabs();
                                 statsCall = false;
                                 addressCall = false;
                                 notificationCallOK = true;
-                                setUpSharedPrefs();
+                                setUpSharedPrefs(notifPref);
                             }
                         }
 
@@ -261,7 +325,7 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
                     @Override
                     public void onFailure(Call<StatExample> call, Throwable t) {
                         svgView.setVisibility(View.GONE);
-                        Snackbar.make(view, "Error in Connection",Snackbar.LENGTH_INDEFINITE).show();
+                        connectionErrorSnackbar.show();
                         Log.d("Error",t.getMessage());
                     }
                 });
@@ -282,9 +346,7 @@ public class ParentActivity extends AppCompatActivity implements SharedPreferenc
 
     private void inflateTabs() {
         svgView.setVisibility(View.GONE);
-        mSectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         mViewPager = findViewById(R.id.container);
-
         mViewPager.setAdapter(mSectionPagerAdapter);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setVisibility(View.VISIBLE);

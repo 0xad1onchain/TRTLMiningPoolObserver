@@ -32,7 +32,7 @@ public class NotificationUtils {
             NotificationChannel mChannel = new NotificationChannel(
                     TRTL_NOTIFICATION_CHANNEL,
                     "Primary",
-                    NotificationManager.IMPORTANCE_MIN);
+                    NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(mChannel);
         }
 

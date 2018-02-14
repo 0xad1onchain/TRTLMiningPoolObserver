@@ -13,7 +13,6 @@ public class SettingsActivity extends AppCompatActivity {
     private CheckBox notifs;
     private SharedPreferences sharedPreferences;
     private boolean isOn;
-    private ParentActivity lol = new ParentActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
