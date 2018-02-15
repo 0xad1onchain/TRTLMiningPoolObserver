@@ -143,6 +143,7 @@ public class ParentActivity extends AppCompatActivity{
                 Boolean firstTime = prefs.getBoolean("first", true);
                 if (!firstTime) {
                     if (key.equals("url")) {
+
                         String pool = prefs.getString("url", "null");
                         updateUserInfo();
                         retrofitAPI = RetrofitService.getAPI(pool);
