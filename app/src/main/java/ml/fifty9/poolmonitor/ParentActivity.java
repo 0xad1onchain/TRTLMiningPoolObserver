@@ -68,9 +68,6 @@ public class ParentActivity extends AppCompatActivity{
     private Snackbar connectionErrorSnackbar, noWalletSnackbar;
     private Intent notifIntent;
 
-    private DashboardFragment dashboardFragment = new DashboardFragment();
-    private PoolFragment poolFragment = new PoolFragment();
-    private PayoutFragment payoutFragment = new PayoutFragment();
     SharedPreferences.OnSharedPreferenceChangeListener poolChangeListener, notifListener;
 
     @Override
@@ -112,48 +109,39 @@ public class ParentActivity extends AppCompatActivity{
         }
 
 
-        notifListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        notifListener = (prefs, key) -> {
+            if (key.equals("ison")) {
+                boolean isOn = prefs.getBoolean("ison", false);
 
-
-
-                if (key.equals("ison")) {
-                    boolean isOn = prefs.getBoolean("ison", false);
-
-                    if (isOn) {
-                        if (notificationCallOK) {
-                            notifIntent.setAction(ReminderTasks.ACTION_TURTLE);
-                            startService(notifIntent);
-                        }
-                    }
-                    else {
-                        stopService(notifIntent);
-                        manager.cancelAll();
-                    }
-                }
-//                setUpSharedPrefs(prefs);
-            }
-        };
-
-
-
-        poolChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-
-                Boolean firstTime = prefs.getBoolean("first", true);
-                if (!firstTime) {
-                    if (key.equals("url")) {
-                        String pool = prefs.getString("url", "null");
-                        updateUserInfo();
-                        retrofitAPI = RetrofitService.getAPI(pool);
-                        callAPI();
+                if (isOn) {
+                    if (notificationCallOK) {
+                        notifIntent.setAction(ReminderTasks.ACTION_TURTLE);
+                        startService(notifIntent);
                     }
                 }
                 else {
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putBoolean("first", false);
-                    editor.apply();
+                    stopService(notifIntent);
+                    manager.cancelAll();
                 }
+            }
+//                setUpSharedPrefs(prefs);
+        };
+
+        poolChangeListener = (prefs, key) -> {
+
+            Boolean firstTime = prefs.getBoolean("first", true);
+            if (!firstTime) {
+                if (key.equals("url")) {
+                    String pool = prefs.getString("url", "null");
+                    updateUserInfo();
+                    retrofitAPI = RetrofitService.getAPI(pool);
+                    callAPI();
+                }
+            }
+            else {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("first", false);
+                editor.apply();
             }
         };
 
@@ -164,16 +152,6 @@ public class ParentActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        if(walletText.isEmpty() || pool.isEmpty()){
-            Intent walletIntent = new Intent(this, WalletActivity.class);
-            startActivityForResult(walletIntent, 1);
-
-        }
-        else {
-            ReminderUtility.scheduleReminder(this);
-            retrofitAPI = RetrofitService.getAPI(pool);
-            callAPI();
-        }
         notifPref.registerOnSharedPreferenceChangeListener(notifListener);
         poolPref.registerOnSharedPreferenceChangeListener(poolChangeListener);
     }
@@ -181,16 +159,6 @@ public class ParentActivity extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
-        if(walletText.isEmpty() || pool.isEmpty()){
-            Intent walletIntent = new Intent(this, WalletActivity.class);
-            startActivityForResult(walletIntent, 1);
-
-        }
-        else {
-            ReminderUtility.scheduleReminder(this);
-            retrofitAPI = RetrofitService.getAPI(pool);
-            callAPI();
-        }
         notifPref.registerOnSharedPreferenceChangeListener(notifListener);
         poolPref.registerOnSharedPreferenceChangeListener(poolChangeListener);
     }

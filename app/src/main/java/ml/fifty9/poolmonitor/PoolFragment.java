@@ -106,13 +106,8 @@ public class PoolFragment extends Fragment {
             Log.d("E", e.getLocalizedMessage());
         }
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Refresh items
-                refresh();
-            }
-        });
+        // Refresh items
+        mSwipeRefreshLayout.setOnRefreshListener(this::refresh);
 
         return view;
     }
