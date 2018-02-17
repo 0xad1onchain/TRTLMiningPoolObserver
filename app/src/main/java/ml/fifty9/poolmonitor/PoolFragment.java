@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.net.URI;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -86,6 +87,9 @@ public class PoolFragment extends Fragment {
             try {
                 URI uri = new URI(poolString);
                 String path = uri.getHost();
+                if (path.equals("api.z-pool.com")) {
+                    path = "z-pool.com";
+                }
                 poolNameText.setText(path);
             }
             catch (Exception e) {e.printStackTrace();}
@@ -142,13 +146,25 @@ public class PoolFragment extends Fragment {
         poolFeeText.setText(config.getFee().toString() + "%");
         paymentThresholdText.setText(convertCoin(config.getMinPaymentThreshold()));
         minersText.setText(String.valueOf(pool.getMiners()));
-        poolHashRateText.setText(by100(pool.getHashrate()));
+        poolHashRateText.setText(getReadableHashString(pool.getHashrate()));
         minersPaidText.setText(String.valueOf(pool.getTotalMinersPaid()));
         totalPaymentsText.setText(String.valueOf(pool.getTotalPayments()));
         difficultyText.setText(String.valueOf(network.getDifficulty()));
         rewardText.setText(convertCoin(network.getReward()));
         updateTimeText.setText(getDate(network.getTimestamp()));
         heightText.setText(String.valueOf(network.getHeight()));
+    }
+
+    public String getReadableHashString(Long hashrate) {
+        int i = 0;
+        Float floatHashrate = Float.valueOf(hashrate);
+        String[] byteUnits = {" H", " KH", " MH", " GH", " TH", " PH" };
+        while (floatHashrate > 1000){
+            floatHashrate = floatHashrate / 1000;
+            i++;
+        }
+        DecimalFormat decimalFormat = new DecimalFormat("0.##");
+        return decimalFormat.format(floatHashrate) + byteUnits[i] + "/s";
     }
 
     public void populateChart() {
@@ -159,16 +175,11 @@ public class PoolFragment extends Fragment {
 
         else {
 
-            List<Long> hashList = new ArrayList<Long>();
-
             List<Entry> entries = new ArrayList<Entry>();
-
-            for (int i = 0; i < hashes.size(); i++) {
-                hashList.add(hashes.get(i).get(1));
-            }
-
-            for (int i = 0; i< hashList.size(); i++) {
-                entries.add(new Entry(i, hashList.get(i)));
+            long i = 0;
+            for (List<Long> hash : hashes) {
+                entries.add(new Entry(i, hash.get(1)));
+                i = i+1;
             }
 
             LineDataSet dataSet = new LineDataSet(entries, "");

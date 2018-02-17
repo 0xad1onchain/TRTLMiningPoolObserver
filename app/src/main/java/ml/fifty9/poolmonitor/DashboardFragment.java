@@ -130,6 +130,8 @@ public class DashboardFragment extends Fragment {
 
     }
 
+
+
     public String convertCoin(String coin) {
         int coins = Integer.parseInt(coin);
         coins = coins/100;
@@ -204,17 +206,13 @@ public class DashboardFragment extends Fragment {
 
         else {
 
-            List<Long> hashList = new ArrayList<Long>();
-
             List<Entry> entries = new ArrayList<Entry>();
-
-            for (int i = 0; i < hashes.size(); i++) {
-                    hashList.add(hashes.get(i).get(1));
+            long i = 0;
+            for (List<Long> hash : hashes) {
+                entries.add(new Entry(i, hash.get(1)));
+                i = i+1;
             }
 
-            for (int i = 0; i< hashList.size(); i++) {
-                entries.add(new Entry(i, hashList.get(i)));
-            }
 
             LineDataSet dataSet = new LineDataSet(entries, "");
             dataSet.disableDashedLine();

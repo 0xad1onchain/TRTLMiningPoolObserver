@@ -29,6 +29,7 @@ Currently our app supports the following pools:
 * [Crytoknight.cc](http://cryptoknight.cc/)
 * [Trtl.ninja](http://trtl.ninja/)
 * [Atpool.party](http://atpool.party/)
+* [Etnchina.io](http://etnchina.io/trtl)
 
 ## Contributing
 
