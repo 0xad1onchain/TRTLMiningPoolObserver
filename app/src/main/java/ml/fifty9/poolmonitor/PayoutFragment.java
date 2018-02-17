@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ public class PayoutFragment extends Fragment {
     private RecyclerAdapter adapter;
     private View view;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ImageView noPaymentImageView;
 
     public PayoutFragment() {
         // Required empty public constructor
@@ -55,6 +58,7 @@ public class PayoutFragment extends Fragment {
         mSwipeRefreshLayout = view.findViewById(R.id.swipePayoutRefreshLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
         this.view = view.findViewById(R.id.container);
+        noPaymentImageView = view.findViewById(R.id.noPaymentImage);
         payouts = new ArrayList<>();
 
         Pool pool = ((ParentActivity)this.getActivity()).getPool();
@@ -62,10 +66,9 @@ public class PayoutFragment extends Fragment {
 
         if(null == payments || payments.size() == 0){
             recyclerView.setVisibility(View.GONE);
-            Snackbar.make(this.view, "Payouts Empty",Snackbar.LENGTH_INDEFINITE).show();
-//            paymentText.setVisibility(View.VISIBLE);
-//            paymentText.setText("Empty Payments");
+            noPaymentImageView.setVisibility(View.VISIBLE);
         }else{
+            noPaymentImageView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             for(int i = 0; i < payments.size(); i+=2){
                 paymentDetails = payments.get(i).split(":",3);
