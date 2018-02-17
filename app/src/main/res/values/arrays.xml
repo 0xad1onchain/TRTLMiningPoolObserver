@@ -21,7 +21,7 @@
     </string-array>
 
     <string-array name="urls">
-        <item>https://api.z-pool.com:8080/</item>
+        <item>https://z-pool.com:8117/</item>
         <item>http://slowandsteady.fun:8119/</item>
         <item>http://eu.turtlepool.space/api/</item>
         <item>http://hk.turtlepool.space/api/</item>
