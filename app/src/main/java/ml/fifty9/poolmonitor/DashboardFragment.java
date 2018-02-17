@@ -81,16 +81,13 @@ public class DashboardFragment extends Fragment {
             walletText.setText(walletString);
         }
 
-        walletText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("Wallet Address", walletText.getText());
-                clipboard.setPrimaryClip(clip);
-                Snackbar snackbar = Snackbar
-                        .make( view ,"Wallet Address copied to clipboard", Snackbar.LENGTH_SHORT);
-                snackbar.show();
-            }
+        walletText.setOnClickListener(view1 -> {
+            ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("Wallet Address", walletText.getText());
+            clipboard.setPrimaryClip(clip);
+            Snackbar snackbar = Snackbar
+                    .make(view1,"Wallet Address copied to clipboard", Snackbar.LENGTH_SHORT);
+            snackbar.show();
         });
 
         try {
@@ -106,13 +103,8 @@ public class DashboardFragment extends Fragment {
             Log.d("E", e.getLocalizedMessage());
         }
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Refresh items
-                refresh();
-            }
-        });
+        // Refresh items
+        mSwipeRefreshLayout.setOnRefreshListener(this::refresh);
 
         return view;
     }
