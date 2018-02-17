@@ -36,8 +36,8 @@ public class TRTLReminderJobService extends JobService {
 
     @Override
     public boolean onStopJob(JobParameters job) {
-        if(backgroundTask != null)
-            backgroundTask.cancel(true);
+//        if(backgroundTask != null)
+        backgroundTask.cancel(true);
         return true;
     }
 }
