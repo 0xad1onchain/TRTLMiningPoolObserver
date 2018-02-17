@@ -186,13 +186,14 @@ public class PoolFragment extends Fragment {
             dataSet.disableDashedLine();
             dataSet.disableDashedHighlightLine();
             dataSet.setColor(Color.GRAY);
-            dataSet.setFillColor(Color.GRAY);
+            dataSet.setFillColor(Color.LTGRAY);
             dataSet.setDrawFilled(true);
-            dataSet.setFillAlpha(255);
+            dataSet.setFillAlpha(200);
             dataSet.setValueTextColor(Color.BLACK);
             dataSet.setDrawValues(false);
-            dataSet.setDrawCircles(false);
-            dataSet.setCircleRadius(0);
+            dataSet.setDrawCircles(true);
+            dataSet.setCircleRadius(2);
+            dataSet.setCircleColor(Color.BLACK);
 
             LineData lineData = new LineData(dataSet);
             lineData.setValueTextSize(0);
