@@ -4,7 +4,7 @@ An android application to monitor mining stats for all major Turtle Coin mining 
 
 Using Pool Monitor you can get all the details regarding your turtle coin mining like hashrate, payments and more.
 
-[![Get it on Google Play](https://silence.im/images/play-github.png)](https://play.google.com/store/apps/details?id=ml.fifty9.poolmonitor)
+[![Get it on Google Play](https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=ml.fifty9.poolmonitor)
 
 Features:
 * Easy. Just add your wallet address and Voilà. You have all the details you require.
