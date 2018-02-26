@@ -9,15 +9,15 @@
             <item>Ny.minetrtl.us</item>
             <item>Trtl.radicaldelta.org</item>
             <item>Auspool.turtleco.in</item>
-            <item>Xk.is</item>
-            <item>Turtlecoinpool.Ddns.Net</item>
+            <!--<item>Xk.is</item>-->
+            <!--<item>Turtlecoinpool.Ddns.Net</item>-->
             <item>Pool.Turtleco.In</item>
             <item>Trtlpool.Ninja</item>
             <item>Pool.Trtl.Me</item>
             <item>Cryptoknight.cc</item>
             <item>Trtl.Ninja</item>
             <item>Atpool.party</item>
-            <item>Etnchina.io</item>
+            <!--<item>Etnchina.io</item>-->
             <item>Sewer.ninja/</item>
             <item>Turtlecoinpool.ml/</item>
     </string-array>
@@ -31,15 +31,15 @@
         <item>http://ny.minetrtl.us:8117/</item>
         <item>http://trtl.radicaldelta.org:8117/</item>
         <item>http://auspool.turtleco.in/api/</item>
-        <item>https://xk.is/api/</item>
-        <item>http://turtlecoinpool.ddns.net:8127/</item>
+        <!--<item>https://xk.is/api/</item>-->
+        <!--<item>http://turtlecoinpool.ddns.net:8127/</item>-->
         <item>http://us.turtlepool.space/api/</item>
         <item>http://trtlpool.ninja/api/</item>
         <item>http://pool.trtl.me:8117/</item>
         <item>http://78.46.85.142:6229/</item>
         <item>https://trtl.ninja/api/</item>
         <item>http://turtle-eu.atpool.party:8117/</item>
-        <item>http://118.31.18.78:8117/</item>
+        <!--<item>http://118.31.18.78:8117/</item>-->
         <item>http://sewer.ninja:8117/</item>
         <item>https://turtlecoinpool.ml:8443/</item>
     </string-array>

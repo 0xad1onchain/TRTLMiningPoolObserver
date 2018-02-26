@@ -13,7 +13,7 @@ Features:
 * Open Source. Pool Monitor is Free and Open Source, enabling anyone to verify its security by auditing the code.
 
 ## List of Pools supported
-Currently the app supports 19 pools:
+Currently the app supports 16 pools:
 
 * [Z-Pool.com](http://z-pool.com/)
 * [SlowandSteady.fun](http://slowandsteady.fun/)

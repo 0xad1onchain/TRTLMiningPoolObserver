@@ -27,7 +27,7 @@
                 android:textStyle="bold"
                 android:textSize="16dp"
                 android:gravity="center"
-                android:text="TRTL Mining Pool Monitor\nv1.1" />
+                android:text="TRTL Mining Pool Monitor\nv1.2" />
 
             <TextView
                 android:layout_width="wrap_content"
