@@ -263,6 +263,7 @@ public class DashboardFragment extends Fragment {
             description.setPosition(0,0);
             hashChart.setDescription(description);
             hashChart.setData(lineData);
+            hashChart.setDoubleTapToZoomEnabled(false);
             hashChart.invalidate();
             hashChart.fitScreen();
         }
