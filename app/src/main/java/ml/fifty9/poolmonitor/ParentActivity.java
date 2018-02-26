@@ -270,7 +270,13 @@ public class ParentActivity extends AppCompatActivity{
                 .enqueue(new Callback<Pool>() {
                     @Override
                     public void onResponse(Call<Pool> call, Response<Pool> response) {
-                        setAPIObjectsWallet(response);
+
+                        try {
+                            setAPIObjectsWallet(response);
+                        }
+                        catch (Exception e) {
+
+                        }
                         addressCall = true;
                         if (statsCall == true) {
 
@@ -304,7 +310,13 @@ public class ParentActivity extends AppCompatActivity{
                     @Override
                     public void onResponse(Call<StatExample> call, Response<StatExample> response) {
 
-                        setAPIObjectsStats(response);
+
+                        try {
+                            setAPIObjectsStats(response);
+                        }
+                        catch (Exception e) {
+
+                        }
 
                         statsCall = true;
                         if (addressCall == true) {
