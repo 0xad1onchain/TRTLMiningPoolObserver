@@ -63,6 +63,8 @@ public class ParentActivity extends AppCompatActivity{
     private boolean addressCall = false;
     private boolean statsCall = false;
     private boolean notificationCallOK = false;
+    private boolean statOK = false;
+    private boolean poolOK = false;
     static final int SETTINGS = 13;
     private NotificationManager manager;
     private Snackbar connectionErrorSnackbar, noWalletSnackbar;
@@ -114,9 +116,13 @@ public class ParentActivity extends AppCompatActivity{
                 boolean isOn = prefs.getBoolean("ison", false);
 
                 if (isOn) {
-                    if (notificationCallOK) {
+                    if (statOK && poolOK) {
                         notifIntent.setAction(ReminderTasks.ACTION_TURTLE);
                         startService(notifIntent);
+                    }
+                    else {
+                        stopService(notifIntent);
+                        manager.cancelAll();
                     }
                 }
                 else {
@@ -132,7 +138,7 @@ public class ParentActivity extends AppCompatActivity{
             Boolean firstTime = prefs.getBoolean("first", true);
             if (!firstTime) {
                 if (key.equals("url")) {
-                    String pool = prefs.getString("url", "null");
+                    String pool = prefs.getString("url", "http://z-pool.com:8117/");
                     updateUserInfo();
                     retrofitAPI = RetrofitService.getAPI(pool);
                     callAPI();
@@ -214,9 +220,13 @@ public class ParentActivity extends AppCompatActivity{
 
     public void setUpSharedPrefs(SharedPreferences preference){
         if (preference.getBoolean("ison", false)) {
-            if (notificationCallOK) {
+            if (statOK && poolOK) {
                 notifIntent.setAction(ReminderTasks.ACTION_TURTLE);
                 startService(notifIntent);
+            }
+            else {
+                stopService(notifIntent);
+                manager.cancelAll();
             }
         } else {
             stopService(notifIntent);
@@ -282,7 +292,7 @@ public class ParentActivity extends AppCompatActivity{
 
                             if (null == statObj) {
                                 noWalletSnackbar.show();
-                                notificationCallOK = false;
+                                statOK = false;
                             }
                             else {
                                 noWalletSnackbar.dismiss();
@@ -290,7 +300,7 @@ public class ParentActivity extends AppCompatActivity{
                                 inflateTabs();
                                 statsCall = false;
                                 addressCall = false;
-                                notificationCallOK = true;
+                                statOK = true;
                                 setUpSharedPrefs(notifPref);
                             }
                         }
@@ -298,6 +308,7 @@ public class ParentActivity extends AppCompatActivity{
 
                     @Override
                     public void onFailure(Call<Pool> call, Throwable t) {
+                        statOK = false;
                         svgView.setVisibility(View.GONE);
                         connectionErrorSnackbar.show();
 
@@ -322,7 +333,7 @@ public class ParentActivity extends AppCompatActivity{
                         if (addressCall == true) {
                             if (null == statObj) {
                                 noWalletSnackbar.show();
-                                notificationCallOK = false;
+                                poolOK = false;
 
                             }
                             else {
@@ -331,7 +342,7 @@ public class ParentActivity extends AppCompatActivity{
                                 inflateTabs();
                                 statsCall = false;
                                 addressCall = false;
-                                notificationCallOK = true;
+                                poolOK = true;
                                 setUpSharedPrefs(notifPref);
                             }
                         }
@@ -340,9 +351,9 @@ public class ParentActivity extends AppCompatActivity{
 
                     @Override
                     public void onFailure(Call<StatExample> call, Throwable t) {
+                        poolOK = false;
                         svgView.setVisibility(View.GONE);
                         connectionErrorSnackbar.show();
-                        Log.d("Error",t.getMessage());
                     }
                 });
     }
