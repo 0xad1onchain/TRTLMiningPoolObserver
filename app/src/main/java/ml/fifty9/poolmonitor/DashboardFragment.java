@@ -99,8 +99,8 @@ public class DashboardFragment extends Fragment {
             populateChart();
         }
         catch (Exception e) {
-            e.printStackTrace();
-            Log.d("E", e.getLocalizedMessage());
+//            e.printStackTrace();
+//            Log.d("E", e.getLocalizedMessage());
         }
 
         // Refresh items
