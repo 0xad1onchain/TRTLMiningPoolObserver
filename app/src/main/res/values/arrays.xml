@@ -18,6 +18,8 @@
             <item>Trtl.Ninja</item>
             <item>Atpool.party</item>
             <item>Etnchina.io</item>
+            <item>Sewer.ninja/</item>
+            <item>Turtlecoinpool.ml/</item>
     </string-array>
 
     <string-array name="urls">
@@ -38,6 +40,8 @@
         <item>https://trtl.ninja/api/</item>
         <item>http://turtle-eu.atpool.party:8117/</item>
         <item>http://118.31.18.78:8117/</item>
+        <item>http://sewer.ninja:8117/</item>
+        <item>https://turtlecoinpool.ml:8443/</item>
     </string-array>
 
 
