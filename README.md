@@ -13,7 +13,7 @@ Features:
 * Open Source. Pool Monitor is Free and Open Source, enabling anyone to verify its security by auditing the code.
 
 ## List of Pools supported
-Currently the app supports 16 pools:
+Currently the app supports 18 pools:
 
 * [Z-Pool.com](http://z-pool.com/)
 * [SlowandSteady.fun](http://slowandsteady.fun/)
@@ -31,6 +31,10 @@ Currently the app supports 16 pools:
 * [Atpool.party](http://atpool.party/)
 * [Sewer.ninja](http://sewer.ninja)
 * [Turtlecoinpool.ml](http://turtlecoinpool.ml)
+* [Unipool.pro](https://trtl.unipool.pro)
+* [Tortugamor.cf](http://tortugamor.cf)
+
+
 
 ## Contributing
 
